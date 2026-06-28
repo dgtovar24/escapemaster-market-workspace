@@ -83,6 +83,7 @@ Para CI/install fuera de workspace:
 | `{/* comment -->` sin cerrar | `Expected corresponding JSX closing tag` | Cerrar con `*/}` |
 | `{outer ? (A) : ({inner ? B : C})}` | `Expected '}' but found '.'` (object literal mode) | Encadenar ternarios o usar bloques `&&` separados |
 | `element!;` (non-null assertion) en `<script>` | `PARSE_ERROR: Expected semicolon after statement` en oxc | Usar `element as HTMLElement;` |
+| `<script>` con `as HTMLFormElement` u otro TS cast, **sin `lang="ts"`** | `PARSE_ERROR: Type assertion expressions can only be used in TypeScript files` | Añadir `<script lang="ts">` explícitamente. Vite 8's oxc NO auto-detecta el default TS de Astro para `<script>`. **Aplica a TODAS las páginas admin que usen TS en `<script>`** (master tiene 14 páginas afectadas). |
 
 ### Arranque típico de dev (background)
 
