@@ -1,0 +1,17 @@
+{
+  "name": "escapemaster-workspace",
+  "private": true,
+  "workspaces": [
+    "web/api",
+    "web/frontend",
+    "master",
+    "packages/escapemaster-ui-components"
+  ],
+  "devDependencies": {
+    "playwright": "^1.59.1",
+    "vite": "^8"
+  },
+  "overrides": {
+    "vite": "^8"
+  }
+}

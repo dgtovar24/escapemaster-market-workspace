@@ -1,0 +1,1179 @@
+<!DOCTYPE html><html><head>
+      <title>escapemaster-widget-docs</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/dgtovar/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.22/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="-escapemaster-widget--documentación-técnica-completa">📚 EscapeMaster Widget — Documentación Técnica Completa </h1>
+<blockquote>
+<p>Versión 1.0 · Abril 2026<br>
+Autor: EscapeMaster Platform<br>
+Propósito: Referencia completa para integrar, personalizar y administrar el widget de reservas en cientos de salas de escape room.</p>
+</blockquote>
+<hr>
+<h2 id="índice">Índice </h2>
+<ol>
+<li><a href="#1-arquitectura-general">Arquitectura general</a></li>
+<li><a href="#2-api-de-erd-panel--endpoints-completos">API de ERD Panel — Endpoints completos</a></li>
+<li><a href="#3-datos-obtenidos-de-cada-endpoint">Datos obtenidos de cada endpoint</a></li>
+<li><a href="#4-calendario-un-game-vs-varios-games">Calendario: un game vs varios games</a></li>
+<li><a href="#5-obtener-solo-la-imagen-de-una-sala">Obtener solo la imagen de una sala</a></li>
+<li><a href="#6-sistema-de-estilos--variables-css">Sistema de estilos — Variables CSS</a></li>
+<li><a href="#7-gu%C3%ADa-de-personalizaci%C3%B3n-visual-completa">Guía de personalización visual completa</a></li>
+<li><a href="#8-implementaci%C3%B3n-multi-sala-cientos-de-salas">Implementación multi-sala (cientos de salas)</a></li>
+<li><a href="#9-panel-de-administraci%C3%B3n--dise%C3%B1o-propuesto">Panel de administración — Diseño propuesto</a></li>
+<li><a href="#10-esquema-de-base-de-datos-sugerido">Esquema de base de datos sugerido</a></li>
+<li><a href="#11-api-rest-interna-de-escapemaster">API REST interna de EscapeMaster</a></li>
+<li><a href="#12-embed-del-widget-por-sala">Embed del widget por sala</a></li>
+<li><a href="#13-referencia-r%C3%A1pida-de-variables-css">Referencia rápida de variables CSS</a></li>
+</ol>
+<hr>
+<h2 id="1-arquitectura-general">1. Arquitectura general </h2>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>┌─────────────────────────────────────────────────────┐
+│                 CLIENTE (navegador)                  │
+│                                                      │
+│  booking-widget.html (autocontenido)                 │
+│  ┌──────────────┐    ┌───────────────────────────┐  │
+│  │  CSS Tokens  │    │     JavaScript (IIFE)      │  │
+│  │  (Variables) │    │  Estado + Flujo de 4 pasos │  │
+│  └──────────────┘    └────────────┬──────────────┘  │
+└───────────────────────────────────┼─────────────────┘
+                                    │ fetch() POST JSON
+                    ┌───────────────▼───────────────────┐
+                    │      ERD Panel API                  │
+                    │  https://erdpanel.com/api           │
+                    │                                     │
+                    │  /prices          → metadatos sala  │
+                    │  /schedules/month → disponibilidad  │
+                    │  /schedules       → horarios/slots  │
+                    │  /games           → listado salas   │
+                    └─────────────────────────────────────┘
+</code></pre><p>El widget es un <strong>único archivo HTML estático</strong> sin dependencias de build. Se comunica directamente con la API de ERD Panel usando <code>fetch()</code> con CORS abierto (<code>access-control-allow-origin: *</code>), por lo que puede ser embebido en cualquier web sin backend propio.</p>
+<hr>
+<h2 id="2-api-de-erd-panel--endpoints-completos">2. API de ERD Panel — Endpoints completos </h2>
+<p><strong>Base URL:</strong> <code>https://erdpanel.com/api</code><br>
+<strong>Método:</strong> <code>POST</code> en todos los endpoints<br>
+<strong>Content-Type:</strong> <code>application/json</code><br>
+<strong>CORS:</strong> Abierto (<code>*</code>) — llamadas válidas desde el navegador</p>
+<h3 id="21-prices--metadatos-de-una-sala">2.1 <code>/prices</code> — Metadatos de una sala </h3>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>POST https://erdpanel.com/api/prices
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span>
+  <span class="token string-property property">"token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"game"</span><span class="token operator">:</span> <span class="token number">221</span>
+<span class="token punctuation">}</span>
+</span></code></pre><blockquote>
+<p>⚠️ <strong><code>game</code> debe ser un entero</strong> (no array). Es el único endpoint que acepta integer.</p>
+</blockquote>
+<p><strong>Respuesta:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"game"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">221</span><span class="token punctuation">,</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"El Invernadero (Barcelona)"</span><span class="token punctuation">,</span>
+    <span class="token property">"capacity"</span><span class="token operator">:</span> <span class="token string">"4 a 10"</span><span class="token punctuation">,</span>
+    <span class="token property">"pay"</span><span class="token operator">:</span> <span class="token number">30</span><span class="token punctuation">,</span>
+    <span class="token property">"type_pay"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"duration"</span><span class="token operator">:</span> <span class="token number">70</span><span class="token punctuation">,</span>
+    <span class="token property">"last_minute_text"</span><span class="token operator">:</span> <span class="token string">"Llama al 617 554 261..."</span><span class="token punctuation">,</span>
+    <span class="token property">"way_pay"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"REDSYS"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"start_date"</span><span class="token operator">:</span> <span class="token string">"2021-06-09"</span><span class="token punctuation">,</span>
+    <span class="token property">"age"</span><span class="token operator">:</span> <span class="token string">"12"</span><span class="token punctuation">,</span>
+    <span class="token property">"genre"</span><span class="token operator">:</span> <span class="token string">"Royal Escape"</span><span class="token punctuation">,</span>
+    <span class="token property">"background_url"</span><span class="token operator">:</span> <span class="token string">"https://www.residentriddle.es/barcelona/wp-content/..."</span><span class="token punctuation">,</span>
+    <span class="token property">"background_opacity"</span><span class="token operator">:</span> <span class="token string">".4"</span><span class="token punctuation">,</span>
+    <span class="token property">"legal_text"</span><span class="token operator">:</span> <span class="token string">"&lt;p&gt;RESIDENT RIDDLE S.L.:...&lt;/p&gt;"</span><span class="token punctuation">,</span>
+    <span class="token property">"block_hours_before"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"block_hours_after"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"last_minute"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token property">"active"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token property">"schedule_auto"</span><span class="token operator">:</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h3 id="22-schedulesmonth--disponibilidad-mensual-del-calendario">2.2 <code>/schedules/month</code> — Disponibilidad mensual del calendario </h3>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>POST https://erdpanel.com/api/schedules/month
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span>
+  <span class="token string-property property">"token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"game"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"date"</span><span class="token operator">:</span> <span class="token string">"2026-04-01"</span>
+<span class="token punctuation">}</span>
+</span></code></pre><blockquote>
+<p>⚠️ <strong><code>game</code> debe ser un array</strong> aunque sea un solo ID. Un entero suelto devuelve <code>Server Error 500</code>.<br>
+<code>date</code> puede ser cualquier día del mes — la API devuelve todo el mes.</p>
+</blockquote>
+<p><strong>Respuesta:</strong> Array plano de strings, uno por cada día del mes (posición 0 = día 1):</p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">[</span>
+  <span class="token string">"available"</span><span class="token punctuation">,</span>
+  <span class="token string">"available"</span><span class="token punctuation">,</span>
+  <span class="token string">"complete"</span><span class="token punctuation">,</span>
+  <span class="token string">"free"</span><span class="token punctuation">,</span>
+  <span class="token string">"available"</span><span class="token punctuation">,</span>
+  <span class="token string">"complete"</span><span class="token punctuation">,</span>
+  <span class="token string">"free"</span><span class="token punctuation">,</span>
+  ...
+<span class="token punctuation">]</span>
+</code></pre><p><strong>Valores posibles por día:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Significado</th>
+<th>Color en calendario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"available"</code></td>
+<td>Hay huecos libres</td>
+<td>Punto dorado (●)</td>
+</tr>
+<tr>
+<td><code>"complete"</code></td>
+<td>Todos los slots ocupados</td>
+<td>Punto rojo oscuro (●)</td>
+</tr>
+<tr>
+<td><code>"free"</code></td>
+<td>Sin sesiones programadas</td>
+<td>Sin punto, gris</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="23-schedules--slotshorarios-de-un-día-concreto">2.3 <code>/schedules</code> — Slots/horarios de un día concreto </h3>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>POST https://erdpanel.com/api/schedules
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span>
+  <span class="token string-property property">"token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"game"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"date"</span><span class="token operator">:</span> <span class="token string">"2026-04-15"</span>
+<span class="token punctuation">}</span>
+</span></code></pre><blockquote>
+<p>⚠️ <strong><code>game</code> debe ser un array</strong>. La respuesta es siempre <code>[[...slots_del_game...]]</code>.<br>
+Si pasas <code>[221, 222]</code>, la respuesta es <code>[[slots_221], [slots_222]]</code>.</p>
+</blockquote>
+<p><strong>Respuesta con un solo game <code>[221]</code>:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">[</span>
+  <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"variation"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"date"</span><span class="token operator">:</span> <span class="token string">"2026/04/15"</span><span class="token punctuation">,</span>
+      <span class="token property">"format_date"</span><span class="token operator">:</span> <span class="token string">"15/04/2026"</span><span class="token punctuation">,</span>
+      <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"10:00"</span><span class="token punctuation">,</span>
+      <span class="token property">"tariff"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+      <span class="token property">"game_id"</span><span class="token operator">:</span> <span class="token number">221</span><span class="token punctuation">,</span>
+      <span class="token property">"game_name"</span><span class="token operator">:</span> <span class="token string">"El Invernadero (Barcelona)"</span><span class="token punctuation">,</span>
+      <span class="token property">"last_minute_text"</span><span class="token operator">:</span> <span class="token string">"Llama al 617 554 261..."</span><span class="token punctuation">,</span>
+      <span class="token property">"status"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"way_pay"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"REDSYS"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"start_date"</span><span class="token operator">:</span> <span class="token string">"2021-06-09"</span><span class="token punctuation">,</span>
+      <span class="token property">"age"</span><span class="token operator">:</span> <span class="token string">"12"</span><span class="token punctuation">,</span>
+      <span class="token property">"genre"</span><span class="token operator">:</span> <span class="token string">"Royal Escape"</span><span class="token punctuation">,</span>
+      <span class="token property">"duration"</span><span class="token operator">:</span> <span class="token number">70</span><span class="token punctuation">,</span>
+      <span class="token property">"background_url"</span><span class="token operator">:</span> <span class="token string">"https://www.residentriddle.es/.../1.jpeg"</span><span class="token punctuation">,</span>
+      <span class="token property">"background_opacity"</span><span class="token operator">:</span> <span class="token string">".4"</span><span class="token punctuation">,</span>
+      <span class="token property">"event"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"capacity"</span><span class="token operator">:</span> <span class="token string">"4 a 10"</span><span class="token punctuation">,</span>
+      <span class="token property">"event_full_capacity"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"event_capacity"</span><span class="token operator">:</span> <span class="token string">"4 a 10"</span><span class="token punctuation">,</span>
+      <span class="token property">"event_private"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"event_private_price"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"schedule_auto"</span><span class="token operator">:</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"12:00"</span><span class="token punctuation">,</span> <span class="token property">"status"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> ... <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"14:00"</span><span class="token punctuation">,</span> <span class="token property">"status"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> ... <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">]</span>
+</code></pre><p><strong>Valores de <code>status</code> en slots:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Significado</th>
+<th>Apariencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Disponible</td>
+<td>Verde / Normal</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Últimas plazas</td>
+<td>Borde ámbar</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Bloqueado por admin</td>
+<td>Opaco, deshabilitado</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Completo / lleno</td>
+<td>Opaco, deshabilitado</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="24-games--listado-de-salas-por-token">2.4 <code>/games</code> — Listado de salas por token </h3>
+<pre data-role="codeBlock" data-info="http" class="language-http http"><code>POST https://erdpanel.com/api/games
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span>
+  <span class="token string-property property">"token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"games"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</span></code></pre><p><strong>Respuesta:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">221</span><span class="token punctuation">,</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"El Invernadero (Barcelona)"</span><span class="token punctuation">,</span> ... <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">222</span><span class="token punctuation">,</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Randalls Party"</span><span class="token punctuation">,</span> ... <span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+</code></pre><p>Usado principalmente para <strong>validar token + IDs</strong> antes de guardar configuración en el panel.</p>
+<hr>
+<h2 id="3-datos-obtenidos-de-cada-endpoint">3. Datos obtenidos de cada endpoint </h2>
+<h3 id="mapa-completo-de-campos-utilizados">Mapa completo de campos utilizados </h3>
+<table>
+<thead>
+<tr>
+<th>Campo API</th>
+<th>Endpoint</th>
+<th>Uso en widget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game.name</code></td>
+<td><code>/prices</code></td>
+<td>Nombre de la sala en la card y resumen</td>
+</tr>
+<tr>
+<td><code>game.background_url</code></td>
+<td><code>/prices</code></td>
+<td>Imagen de fondo de la game card</td>
+</tr>
+<tr>
+<td><code>game.background_opacity</code></td>
+<td><code>/prices</code></td>
+<td>Opacidad del overlay sobre la imagen</td>
+</tr>
+<tr>
+<td><code>game.capacity</code></td>
+<td><code>/prices</code></td>
+<td>Texto "4 a 10 jugadores" en la card</td>
+</tr>
+<tr>
+<td><code>game.pay</code></td>
+<td><code>/prices</code></td>
+<td>Precio base por persona (€)</td>
+</tr>
+<tr>
+<td><code>game.duration</code></td>
+<td><code>/prices</code></td>
+<td>Duración en minutos</td>
+</tr>
+<tr>
+<td><code>game.genre</code></td>
+<td><code>/prices</code></td>
+<td>Tag de género (ej: "Royal Escape")</td>
+</tr>
+<tr>
+<td><code>game.age</code></td>
+<td><code>/prices</code></td>
+<td>Edad mínima (ej: "12")</td>
+</tr>
+<tr>
+<td><code>game.last_minute_text</code></td>
+<td><code>/prices</code></td>
+<td>Aviso de reservas last-minute</td>
+</tr>
+<tr>
+<td><code>game.legal_text</code></td>
+<td><code>/prices</code></td>
+<td>Texto RGPD / política de privacidad</td>
+</tr>
+<tr>
+<td>Día <code>"available"/"complete"/"free"</code></td>
+<td><code>/schedules/month</code></td>
+<td>Estado visual de cada día en el calendario</td>
+</tr>
+<tr>
+<td><code>slot.time</code></td>
+<td><code>/schedules</code></td>
+<td>Hora del slot (ej: "10:00")</td>
+</tr>
+<tr>
+<td><code>slot.status</code></td>
+<td><code>/schedules</code></td>
+<td>Estado del slot (0=libre, 1=últimas, 2-3=bloqueado)</td>
+</tr>
+<tr>
+<td><code>slot.capacity</code></td>
+<td><code>/schedules</code></td>
+<td>Capacidad del slot específico</td>
+</tr>
+<tr>
+<td><code>slot.duration</code></td>
+<td><code>/schedules</code></td>
+<td>Duración (confirma o sobreescribe la de <code>/prices</code>)</td>
+</tr>
+<tr>
+<td><code>slot.last_minute_text</code></td>
+<td><code>/schedules</code></td>
+<td>Texto específico del slot si difiere</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-calendario-un-game-vs-varios-games">4. Calendario: un game vs varios games </h2>
+<h3 id="un-solo-game-recomendado-para-widget-de-sala-específica">Un solo game (recomendado para widget de sala específica) </h3>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token comment">// /schedules/month — pasar siempre como array de uno</span>
+<span class="token keyword keyword-const">const</span> response <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://erdpanel.com/api/schedules/month'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token string-property property">'Content-Type'</span><span class="token operator">:</span> <span class="token string">'application/json'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">body</span><span class="token operator">:</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">'TU_TOKEN'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">game</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">]</span><span class="token punctuation">,</span>          <span class="token comment">// ← array con un solo ID</span>
+    <span class="token literal-property property">date</span><span class="token operator">:</span> <span class="token string">'2026-04-01'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> data <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> response<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// data = ["available", "complete", "free", ...]  — array plano, un string por día</span>
+
+<span class="token comment">// /schedules — obtener slots del día seleccionado</span>
+<span class="token keyword keyword-const">const</span> slotsResponse <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://erdpanel.com/api/schedules'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token string-property property">'Content-Type'</span><span class="token operator">:</span> <span class="token string">'application/json'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">body</span><span class="token operator">:</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">'TU_TOKEN'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">game</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">date</span><span class="token operator">:</span> <span class="token string">'2026-04-15'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> slotsData <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> slotsResponse<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// slotsData = [[{time:"10:00", status:0,...}, {time:"12:00",...}]]</span>
+<span class="token keyword keyword-const">const</span> slots <span class="token operator">=</span> slotsData<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// ← siempre tomar el índice 0</span>
+</code></pre><h3 id="varios-games-widget-multi-sala--marketplace">Varios games (widget multi-sala / marketplace) </h3>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token comment">// /schedules/month — disponibilidad combinada (el sistema devuelve vista unificada)</span>
+<span class="token keyword keyword-const">const</span> monthData <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://erdpanel.com/api/schedules/month'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token string-property property">'Content-Type'</span><span class="token operator">:</span> <span class="token string">'application/json'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">body</span><span class="token operator">:</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">'TU_TOKEN'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">game</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span><span class="token punctuation">,</span>     <span class="token comment">// ← múltiples IDs</span>
+    <span class="token literal-property property">date</span><span class="token operator">:</span> <span class="token string">'2026-04-01'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token parameter">r</span> <span class="token arrow operator">=&gt;</span> r<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// monthData = ["available", "complete", ...]  — vista combinada</span>
+
+<span class="token comment">// /schedules — slots por juego seleccionado</span>
+<span class="token keyword keyword-const">const</span> allSlotsData <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://erdpanel.com/api/schedules'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token string-property property">'Content-Type'</span><span class="token operator">:</span> <span class="token string">'application/json'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">body</span><span class="token operator">:</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">'TU_TOKEN'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">game</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">date</span><span class="token operator">:</span> <span class="token string">'2026-04-15'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token parameter">r</span> <span class="token arrow operator">=&gt;</span> r<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// allSlotsData = [[slots_221], [slots_222]]</span>
+
+<span class="token comment">// Extraer slots de un game concreto por su posición en el array enviado</span>
+<span class="token keyword keyword-const">const</span> gameIds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> selectedGameId <span class="token operator">=</span> <span class="token number">221</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> gameIndex <span class="token operator">=</span> gameIds<span class="token punctuation">.</span><span class="token method function property-access">indexOf</span><span class="token punctuation">(</span>selectedGameId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> slots <span class="token operator">=</span> allSlotsData<span class="token punctuation">[</span>gameIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// → slots_221</span>
+</code></pre><blockquote>
+<p><strong>⚠️ Regla de oro:</strong> Pasar el mismo array de IDs en el mismo orden tanto en <code>/schedules/month</code> como en <code>/schedules</code>. El índice de posición en la respuesta corresponde al índice del ID enviado.</p>
+</blockquote>
+<h3 id="tabla-de-diferencias">Tabla de diferencias </h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Un solo game</th>
+<th>Varios games</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>game</code> param</td>
+<td><code>[221]</code></td>
+<td><code>[221, 222, 223]</code></td>
+</tr>
+<tr>
+<td>Respuesta <code>/month</code></td>
+<td>Array plano de strings</td>
+<td>Array plano combinado</td>
+</tr>
+<tr>
+<td>Respuesta <code>/schedules</code></td>
+<td><code>[[slots]]</code> → tomar <code>[0]</code></td>
+<td><code>[[slots_221],[slots_222],...]</code></td>
+</tr>
+<tr>
+<td>Extracción de slots</td>
+<td><code>data[0]</code></td>
+<td><code>data[gameIds.indexOf(selectedId)]</code></td>
+</tr>
+<tr>
+<td>Uso ideal</td>
+<td>Widget embebido en página de sala</td>
+<td>Marketplace / panel multi-sala</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-obtener-solo-la-imagen-de-una-sala">5. Obtener solo la imagen de una sala </h2>
+<p>La imagen de cada sala se obtiene del campo <code>background_url</code> en <code>/prices</code>:</p>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">getRoomImage</span><span class="token punctuation">(</span><span class="token parameter">token<span class="token punctuation">,</span> gameId</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-const">const</span> response <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://erdpanel.com/api/prices'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">headers</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token string-property property">'Content-Type'</span><span class="token operator">:</span> <span class="token string">'application/json'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">body</span><span class="token operator">:</span> <span class="token known-class-name class-name">JSON</span><span class="token punctuation">.</span><span class="token method function property-access">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> token<span class="token punctuation">,</span> <span class="token literal-property property">game</span><span class="token operator">:</span> gameId <span class="token punctuation">}</span><span class="token punctuation">)</span>  <span class="token comment">// gameId como integer</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword keyword-const">const</span> data <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> response<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword control-flow keyword-return">return</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">url</span><span class="token operator">:</span> data<span class="token punctuation">.</span><span class="token property-access">game</span><span class="token punctuation">.</span><span class="token property-access">background_url</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">opacity</span><span class="token operator">:</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token property-access">game</span><span class="token punctuation">.</span><span class="token property-access">background_opacity</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0.4</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> data<span class="token punctuation">.</span><span class="token property-access">game</span><span class="token punctuation">.</span><span class="token property-access">name</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// Uso:</span>
+<span class="token keyword keyword-const">const</span> img <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">getRoomImage</span><span class="token punctuation">(</span><span class="token string">'1boIAa1xCJAlc30Q'</span><span class="token punctuation">,</span> <span class="token number">221</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span>img<span class="token punctuation">.</span><span class="token property-access">url</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// → "https://www.residentriddle.es/barcelona/wp-content/uploads/sites/2/2023/10/1.jpeg"</span>
+
+<span class="token comment">// Usarla como fondo CSS:</span>
+element<span class="token punctuation">.</span><span class="token property-access">style</span><span class="token punctuation">.</span><span class="token property-access">backgroundImage</span> <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">url('</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>img<span class="token punctuation">.</span><span class="token property-access">url</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">')</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+element<span class="token punctuation">.</span><span class="token property-access">style</span><span class="token punctuation">.</span><span class="token property-access">backgroundSize</span> <span class="token operator">=</span> <span class="token string">'cover'</span><span class="token punctuation">;</span>
+element<span class="token punctuation">.</span><span class="token property-access">style</span><span class="token punctuation">.</span><span class="token property-access">backgroundPosition</span> <span class="token operator">=</span> <span class="token string">'center'</span><span class="token punctuation">;</span>
+</code></pre><h3 id="obtener-imágenes-de-múltiples-salas-en-paralelo">Obtener imágenes de múltiples salas en paralelo </h3>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token keyword keyword-async">async</span> <span class="token keyword keyword-function">function</span> <span class="token function">getAllRoomImages</span><span class="token punctuation">(</span><span class="token parameter">token<span class="token punctuation">,</span> gameIds</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-const">const</span> results <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token known-class-name class-name">Promise</span><span class="token punctuation">.</span><span class="token method function property-access">allSettled</span><span class="token punctuation">(</span>
+    gameIds<span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token parameter">id</span> <span class="token arrow operator">=&gt;</span> <span class="token function">getRoomImage</span><span class="token punctuation">(</span>token<span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword control-flow keyword-return">return</span> results
+    <span class="token punctuation">.</span><span class="token method function property-access">filter</span><span class="token punctuation">(</span><span class="token parameter">r</span> <span class="token arrow operator">=&gt;</span> r<span class="token punctuation">.</span><span class="token property-access">status</span> <span class="token operator">===</span> <span class="token string">'fulfilled'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token parameter">r</span> <span class="token arrow operator">=&gt;</span> r<span class="token punctuation">.</span><span class="token property-access">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-const">const</span> images <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token function">getAllRoomImages</span><span class="token punctuation">(</span><span class="token string">'TU_TOKEN'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">,</span> <span class="token number">223</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// → [{ url, opacity, name }, { url, opacity, name }, ...]</span>
+</code></pre><blockquote>
+<p>💡 Las imágenes están en servidores de WordPress de cada empresa. Úsalas con <code>&lt;img loading="lazy"&gt;</code> o como <code>background-image</code> en CSS. No hay endpoint dedicado solo para imágenes; siempre vienen dentro de <code>/prices</code>.</p>
+</blockquote>
+<hr>
+<h2 id="6-sistema-de-estilos--variables-css">6. Sistema de estilos — Variables CSS </h2>
+<p>El widget usa un sistema de <strong>CSS Custom Properties (variables)</strong> organizado en tres capas:</p>
+<h3 id="capa-1-tokens-de-tipografía-y-espaciado">Capa 1: Tokens de tipografía y espaciado </h3>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token pseudo-class">:root</span></span> <span class="token punctuation">{</span>
+  <span class="token comment">/* ── Escala tipográfica fluida (clamp) ── */</span>
+  <span class="token variable">--text-xs</span><span class="token punctuation">:</span>   <span class="token function">clamp</span><span class="token punctuation">(</span><span class="token number">0.75</span><span class="token unit">rem</span><span class="token punctuation">,</span>  <span class="token number">0.7</span><span class="token unit">rem</span>  <span class="token operator">+</span> <span class="token number">0.25</span><span class="token unit">vw</span><span class="token punctuation">,</span> <span class="token number">0.875</span><span class="token unit">rem</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--text-sm</span><span class="token punctuation">:</span>   <span class="token function">clamp</span><span class="token punctuation">(</span><span class="token number">0.875</span><span class="token unit">rem</span><span class="token punctuation">,</span> <span class="token number">0.8</span><span class="token unit">rem</span>  <span class="token operator">+</span> <span class="token number">0.35</span><span class="token unit">vw</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token unit">rem</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--text-base</span><span class="token punctuation">:</span> <span class="token function">clamp</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token unit">rem</span><span class="token punctuation">,</span>     <span class="token number">0.95</span><span class="token unit">rem</span> <span class="token operator">+</span> <span class="token number">0.25</span><span class="token unit">vw</span><span class="token punctuation">,</span> <span class="token number">1.125</span><span class="token unit">rem</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--text-lg</span><span class="token punctuation">:</span>   <span class="token function">clamp</span><span class="token punctuation">(</span><span class="token number">1.125</span><span class="token unit">rem</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token unit">rem</span>    <span class="token operator">+</span> <span class="token number">0.75</span><span class="token unit">vw</span><span class="token punctuation">,</span> <span class="token number">1.5</span><span class="token unit">rem</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--text-xl</span><span class="token punctuation">:</span>   <span class="token function">clamp</span><span class="token punctuation">(</span><span class="token number">1.5</span><span class="token unit">rem</span><span class="token punctuation">,</span>   <span class="token number">1.2</span><span class="token unit">rem</span>  <span class="token operator">+</span> <span class="token number">1.25</span><span class="token unit">vw</span><span class="token punctuation">,</span> <span class="token number">2.25</span><span class="token unit">rem</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/* ── Espaciado (múltiplos de 0.25rem) ── */</span>
+  <span class="token variable">--sp1</span><span class="token punctuation">:</span> <span class="token number">0.25</span><span class="token unit">rem</span><span class="token punctuation">;</span>   <span class="token comment">/* 4px  */</span>
+  <span class="token variable">--sp2</span><span class="token punctuation">:</span> <span class="token number">0.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>    <span class="token comment">/* 8px  */</span>
+  <span class="token variable">--sp3</span><span class="token punctuation">:</span> <span class="token number">0.75</span><span class="token unit">rem</span><span class="token punctuation">;</span>   <span class="token comment">/* 12px */</span>
+  <span class="token variable">--sp4</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token unit">rem</span><span class="token punctuation">;</span>      <span class="token comment">/* 16px */</span>
+  <span class="token variable">--sp5</span><span class="token punctuation">:</span> <span class="token number">1.25</span><span class="token unit">rem</span><span class="token punctuation">;</span>   <span class="token comment">/* 20px */</span>
+  <span class="token variable">--sp6</span><span class="token punctuation">:</span> <span class="token number">1.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>    <span class="token comment">/* 24px */</span>
+  <span class="token variable">--sp8</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token unit">rem</span><span class="token punctuation">;</span>      <span class="token comment">/* 32px */</span>
+  <span class="token variable">--sp10</span><span class="token punctuation">:</span> <span class="token number">2.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>   <span class="token comment">/* 40px */</span>
+  <span class="token variable">--sp12</span><span class="token punctuation">:</span> <span class="token number">3</span><span class="token unit">rem</span><span class="token punctuation">;</span>     <span class="token comment">/* 48px */</span>
+
+  <span class="token comment">/* ── Familias tipográficas ── */</span>
+  <span class="token variable">--fd</span><span class="token punctuation">:</span> <span class="token string">'Cinzel'</span><span class="token punctuation">,</span> <span class="token string">'Georgia'</span><span class="token punctuation">,</span> serif<span class="token punctuation">;</span>        <span class="token comment">/* Display / Títulos */</span>
+  <span class="token variable">--fb</span><span class="token punctuation">:</span> <span class="token string">'Inter'</span><span class="token punctuation">,</span> <span class="token string">'Helvetica Neue'</span><span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span> <span class="token comment">/* Body / UI */</span>
+
+  <span class="token comment">/* ── Border radius ── */</span>
+  <span class="token variable">--r-sm</span><span class="token punctuation">:</span>   <span class="token number">0.375</span><span class="token unit">rem</span><span class="token punctuation">;</span>    <span class="token comment">/* 6px  - inputs pequeños */</span>
+  <span class="token variable">--r-md</span><span class="token punctuation">:</span>   <span class="token number">0.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>      <span class="token comment">/* 8px  - botones, inputs */</span>
+  <span class="token variable">--r-lg</span><span class="token punctuation">:</span>   <span class="token number">0.75</span><span class="token unit">rem</span><span class="token punctuation">;</span>     <span class="token comment">/* 12px - cards */</span>
+  <span class="token variable">--r-xl</span><span class="token punctuation">:</span>   <span class="token number">1</span><span class="token unit">rem</span><span class="token punctuation">;</span>        <span class="token comment">/* 16px - card principal */</span>
+  <span class="token variable">--r-full</span><span class="token punctuation">:</span> <span class="token number">9999</span><span class="token unit">px</span><span class="token punctuation">;</span>      <span class="token comment">/* Píldora/círculo */</span>
+
+  <span class="token comment">/* ── Transición global ── */</span>
+  <span class="token variable">--tr</span><span class="token punctuation">:</span> <span class="token number">180</span><span class="token unit">ms</span> <span class="token function">cubic-bezier</span><span class="token punctuation">(</span><span class="token number">0.16</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0.3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="capa-2-tokens-de-color-tema-oscuro">Capa 2: Tokens de color (tema oscuro) </h3>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token attribute"><span class="token punctuation">[</span><span class="token attr-name">data-theme</span><span class="token operator">=</span><span class="token attr-value">"dark"</span><span class="token punctuation">]</span></span></span> <span class="token punctuation">{</span>
+  <span class="token comment">/* ── Fondos / Superficies ── */</span>
+  <span class="token variable">--bg</span><span class="token punctuation">:</span>         <span class="token hexcode color">#0c0b09</span><span class="token punctuation">;</span>   <span class="token comment">/* Fondo general de la página */</span>
+  <span class="token variable">--sf</span><span class="token punctuation">:</span>         <span class="token hexcode color">#131210</span><span class="token punctuation">;</span>   <span class="token comment">/* Card principal */</span>
+  <span class="token variable">--sf2</span><span class="token punctuation">:</span>        <span class="token hexcode color">#191714</span><span class="token punctuation">;</span>   <span class="token comment">/* Inputs, slots, elementos internos */</span>
+  <span class="token variable">--sf3</span><span class="token punctuation">:</span>        <span class="token hexcode color">#1f1c18</span><span class="token punctuation">;</span>   <span class="token comment">/* Hover de superficies */</span>
+  <span class="token variable">--sfo</span><span class="token punctuation">:</span>        <span class="token hexcode color">#282420</span><span class="token punctuation">;</span>   <span class="token comment">/* Offset / seleccionado inactivo */</span>
+
+  <span class="token comment">/* ── Bordes y separadores ── */</span>
+  <span class="token variable">--bd</span><span class="token punctuation">:</span>         <span class="token hexcode color">#2a2620</span><span class="token punctuation">;</span>   <span class="token comment">/* Borde general de cards/inputs */</span>
+  <span class="token variable">--dv</span><span class="token punctuation">:</span>         <span class="token hexcode color">#201d18</span><span class="token punctuation">;</span>   <span class="token comment">/* Divisor entre paneles */</span>
+
+  <span class="token comment">/* ── Texto ── */</span>
+  <span class="token variable">--tx</span><span class="token punctuation">:</span>         <span class="token hexcode color">#e6ddd0</span><span class="token punctuation">;</span>   <span class="token comment">/* Texto principal */</span>
+  <span class="token variable">--txm</span><span class="token punctuation">:</span>        <span class="token hexcode color">#857a6d</span><span class="token punctuation">;</span>   <span class="token comment">/* Texto secundario/muted */</span>
+  <span class="token variable">--txf</span><span class="token punctuation">:</span>        <span class="token hexcode color">#46423c</span><span class="token punctuation">;</span>   <span class="token comment">/* Texto muy tenue/placeholder */</span>
+
+  <span class="token comment">/* ── Color primario (ámbar dorado) ── */</span>
+  <span class="token variable">--pr</span><span class="token punctuation">:</span>         <span class="token hexcode color">#c8860a</span><span class="token punctuation">;</span>   <span class="token comment">/* Color primario base */</span>
+  <span class="token variable">--prh</span><span class="token punctuation">:</span>        <span class="token hexcode color">#e09820</span><span class="token punctuation">;</span>   <span class="token comment">/* Hover del primario */</span>
+  <span class="token variable">--pra</span><span class="token punctuation">:</span>        <span class="token hexcode color">#f0a830</span><span class="token punctuation">;</span>   <span class="token comment">/* Active/focus del primario */</span>
+  <span class="token variable">--prg</span><span class="token punctuation">:</span>        <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0.65</span> <span class="token number">0.18</span> <span class="token number">65</span> <span class="token operator">/</span> <span class="token number">0.18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* Glow del primario */</span>
+  <span class="token variable">--prhl</span><span class="token punctuation">:</span>       <span class="token hexcode color">#281f0e</span><span class="token punctuation">;</span>   <span class="token comment">/* Highlight background (primario muy tenue) */</span>
+
+  <span class="token comment">/* ── Colores funcionales ── */</span>
+  <span class="token variable">--dng</span><span class="token punctuation">:</span>        <span class="token hexcode color">#c0392b</span><span class="token punctuation">;</span>   <span class="token comment">/* Peligro/error */</span>
+  <span class="token variable">--dngm</span><span class="token punctuation">:</span>       <span class="token hexcode color">#6b2020</span><span class="token punctuation">;</span>   <span class="token comment">/* Peligro muted (puntos "completo" en calendario) */</span>
+  <span class="token variable">--suc</span><span class="token punctuation">:</span>        <span class="token hexcode color">#27a065</span><span class="token punctuation">;</span>   <span class="token comment">/* Éxito */</span>
+
+  <span class="token comment">/* ── Sombras ── */</span>
+  <span class="token variable">--sh-sm</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">1</span><span class="token unit">px</span> <span class="token number">3</span><span class="token unit">px</span> <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token operator">/</span> <span class="token number">0.4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--sh-md</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">4</span><span class="token unit">px</span> <span class="token number">20</span><span class="token unit">px</span> <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token operator">/</span> <span class="token number">0.55</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--sh-lg</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">12</span><span class="token unit">px</span> <span class="token number">48</span><span class="token unit">px</span> <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token operator">/</span> <span class="token number">0.7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--sh-gl</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">28</span><span class="token unit">px</span> <span class="token function">var</span><span class="token punctuation">(</span><span class="token variable">--prg</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">/* Glow del primario */</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="7-guía-de-personalización-visual-completa">7. Guía de personalización visual completa </h2>
+<h3 id="71-cambiar-la-paleta-de-colores">7.1 Cambiar la paleta de colores </h3>
+<p>Para cambiar el widget de tema oscuro ámbar a cualquier otro look, solo hay que sobreescribir las variables CSS. Ejemplos:</p>
+<p><strong>Tema neón verde (cyberpunk):</strong></p>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token attribute"><span class="token punctuation">[</span><span class="token attr-name">data-theme</span><span class="token operator">=</span><span class="token attr-value">"dark"</span><span class="token punctuation">]</span></span></span> <span class="token punctuation">{</span>
+  <span class="token variable">--bg</span><span class="token punctuation">:</span>    <span class="token hexcode color">#050a05</span><span class="token punctuation">;</span>
+  <span class="token variable">--sf</span><span class="token punctuation">:</span>    <span class="token hexcode color">#0a120a</span><span class="token punctuation">;</span>
+  <span class="token variable">--sf2</span><span class="token punctuation">:</span>   <span class="token hexcode color">#0f1a0f</span><span class="token punctuation">;</span>
+  <span class="token variable">--bd</span><span class="token punctuation">:</span>    <span class="token hexcode color">#1a2e1a</span><span class="token punctuation">;</span>
+  <span class="token variable">--tx</span><span class="token punctuation">:</span>    <span class="token hexcode color">#c8f5c8</span><span class="token punctuation">;</span>
+  <span class="token variable">--txm</span><span class="token punctuation">:</span>   <span class="token hexcode color">#6a9e6a</span><span class="token punctuation">;</span>
+  <span class="token variable">--txf</span><span class="token punctuation">:</span>   <span class="token hexcode color">#2d4a2d</span><span class="token punctuation">;</span>
+  <span class="token variable">--pr</span><span class="token punctuation">:</span>    <span class="token hexcode color">#00e676</span><span class="token punctuation">;</span>
+  <span class="token variable">--prh</span><span class="token punctuation">:</span>   <span class="token hexcode color">#33eb91</span><span class="token punctuation">;</span>
+  <span class="token variable">--prg</span><span class="token punctuation">:</span>   <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0.75</span> <span class="token number">0.2</span> <span class="token number">145</span> <span class="token operator">/</span> <span class="token number">0.18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--prhl</span><span class="token punctuation">:</span>  <span class="token hexcode color">#001a0a</span><span class="token punctuation">;</span>
+  <span class="token variable">--suc</span><span class="token punctuation">:</span>   <span class="token hexcode color">#00e676</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Tema claro minimalista:</strong></p>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token attribute"><span class="token punctuation">[</span><span class="token attr-name">data-theme</span><span class="token operator">=</span><span class="token attr-value">"light"</span><span class="token punctuation">]</span></span></span> <span class="token punctuation">{</span>
+  <span class="token variable">--bg</span><span class="token punctuation">:</span>    <span class="token hexcode color">#f8f7f5</span><span class="token punctuation">;</span>
+  <span class="token variable">--sf</span><span class="token punctuation">:</span>    <span class="token hexcode color">#ffffff</span><span class="token punctuation">;</span>
+  <span class="token variable">--sf2</span><span class="token punctuation">:</span>   <span class="token hexcode color">#f3f1ee</span><span class="token punctuation">;</span>
+  <span class="token variable">--sf3</span><span class="token punctuation">:</span>   <span class="token hexcode color">#ebe8e4</span><span class="token punctuation">;</span>
+  <span class="token variable">--sfo</span><span class="token punctuation">:</span>   <span class="token hexcode color">#e0dcd6</span><span class="token punctuation">;</span>
+  <span class="token variable">--bd</span><span class="token punctuation">:</span>    <span class="token hexcode color">#d4cfc8</span><span class="token punctuation">;</span>
+  <span class="token variable">--dv</span><span class="token punctuation">:</span>    <span class="token hexcode color">#e8e4df</span><span class="token punctuation">;</span>
+  <span class="token variable">--tx</span><span class="token punctuation">:</span>    <span class="token hexcode color">#1a1714</span><span class="token punctuation">;</span>
+  <span class="token variable">--txm</span><span class="token punctuation">:</span>   <span class="token hexcode color">#6b6460</span><span class="token punctuation">;</span>
+  <span class="token variable">--txf</span><span class="token punctuation">:</span>   <span class="token hexcode color">#a09890</span><span class="token punctuation">;</span>
+  <span class="token variable">--pr</span><span class="token punctuation">:</span>    <span class="token hexcode color">#b8720a</span><span class="token punctuation">;</span>
+  <span class="token variable">--prh</span><span class="token punctuation">:</span>   <span class="token hexcode color">#9a5e08</span><span class="token punctuation">;</span>
+  <span class="token variable">--prg</span><span class="token punctuation">:</span>   <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0.55</span> <span class="token number">0.15</span> <span class="token number">65</span> <span class="token operator">/</span> <span class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">--prhl</span><span class="token punctuation">:</span>  <span class="token hexcode color">#fef3e2</span><span class="token punctuation">;</span>
+  <span class="token variable">--sh-lg</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">12</span><span class="token unit">px</span> <span class="token number">48</span><span class="token unit">px</span> <span class="token function">oklch</span><span class="token punctuation">(</span><span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token operator">/</span> <span class="token number">0.12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="72-cambiar-las-fuentes">7.2 Cambiar las fuentes </h3>
+<p>Sustituir en el <code>&lt;head&gt;</code> el link de Google Fonts y actualizar las variables:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token comment">&lt;!-- Ejemplo: Playfair Display + Outfit --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Outfit:wght@300..700&amp;display=swap<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+</code></pre><pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token pseudo-class">:root</span></span> <span class="token punctuation">{</span>
+  <span class="token variable">--fd</span><span class="token punctuation">:</span> <span class="token string">'Playfair Display'</span><span class="token punctuation">,</span> <span class="token string">'Georgia'</span><span class="token punctuation">,</span> serif<span class="token punctuation">;</span>
+  <span class="token variable">--fb</span><span class="token punctuation">:</span> <span class="token string">'Outfit'</span><span class="token punctuation">,</span> <span class="token string">'Helvetica Neue'</span><span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="73-cambiar-los-border-radius-redondez">7.3 Cambiar los border-radius (redondez) </h3>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token pseudo-class">:root</span></span> <span class="token punctuation">{</span>
+  <span class="token comment">/* Estilo muy redondeado (moderno/amigable) */</span>
+  <span class="token variable">--r-sm</span><span class="token punctuation">:</span>   <span class="token number">0.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-md</span><span class="token punctuation">:</span>   <span class="token number">0.875</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-lg</span><span class="token punctuation">:</span>   <span class="token number">1.25</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-xl</span><span class="token punctuation">:</span>   <span class="token number">1.75</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/* Estilo cuadrado (corporativo/serio) */</span>
+  <span class="token variable">--r-sm</span><span class="token punctuation">:</span>   <span class="token number">0.125</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-md</span><span class="token punctuation">:</span>   <span class="token number">0.25</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-lg</span><span class="token punctuation">:</span>   <span class="token number">0.375</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--r-xl</span><span class="token punctuation">:</span>   <span class="token number">0.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="74-ajustar-el-espaciado-general">7.4 Ajustar el espaciado general </h3>
+<pre data-role="codeBlock" data-info="css" class="language-css css"><code><span class="token selector"><span class="token pseudo-class">:root</span></span> <span class="token punctuation">{</span>
+  <span class="token comment">/* Versión compacta (widget pequeño) */</span>
+  <span class="token variable">--sp4</span><span class="token punctuation">:</span> <span class="token number">0.75</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--sp6</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--sp8</span><span class="token punctuation">:</span> <span class="token number">1.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+
+  <span class="token comment">/* Versión espaciosa (pantallas grandes) */</span>
+  <span class="token variable">--sp4</span><span class="token punctuation">:</span> <span class="token number">1.25</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--sp6</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+  <span class="token variable">--sp8</span><span class="token punctuation">:</span> <span class="token number">2.5</span><span class="token unit">rem</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="75-componentes-individuales-editables">7.5 Componentes individuales editables </h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Selectores CSS</th>
+<th>Variables clave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Card principal</td>
+<td><code>.card</code></td>
+<td><code>--sf</code>, <code>--bd</code>, <code>--r-xl</code>, <code>--sh-lg</code></td>
+</tr>
+<tr>
+<td>Game cards</td>
+<td><code>.gc</code>, <code>.gc.selected</code></td>
+<td><code>--r-lg</code>, <code>--pr</code>, <code>--sh-gl</code></td>
+</tr>
+<tr>
+<td>Días del calendario</td>
+<td><code>.day.available</code>, <code>.day.selected</code></td>
+<td><code>--pr</code>, <code>--prg</code>, <code>--r-md</code></td>
+</tr>
+<tr>
+<td>Slots de horario</td>
+<td><code>.slot</code>, <code>.slot.selected</code></td>
+<td><code>--sf2</code>, <code>--pr</code>, <code>--r-md</code></td>
+</tr>
+<tr>
+<td>Botón primario</td>
+<td><code>.btn-pr</code></td>
+<td><code>--pr</code>, <code>--prh</code>, <code>--prg</code></td>
+</tr>
+<tr>
+<td>Inputs del form</td>
+<td><code>.finput:focus</code></td>
+<td><code>--pr</code>, <code>--r-md</code></td>
+</tr>
+<tr>
+<td>Topbar config</td>
+<td><code>.topbar</code></td>
+<td><code>--sf</code>, <code>--bd</code>, <code>--r-lg</code></td>
+</tr>
+<tr>
+<td>Badge activo</td>
+<td><code>.topbar-badge</code></td>
+<td><code>--pr</code></td>
+</tr>
+<tr>
+<td>Modal de config</td>
+<td><code>.modal</code></td>
+<td><code>--sf</code>, <code>--bd</code>, <code>--r-xl</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="8-implementación-multi-sala-cientos-de-salas">8. Implementación multi-sala (cientos de salas) </h2>
+<h3 id="81-modelo-de-widget-embebido">8.1 Modelo de widget embebido </h3>
+<p>Cada sala puede tener su propio widget con su configuración específica. El widget acepta atributos <code>data-*</code> para inicializarse:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token comment">&lt;!-- Sala específica embebida en su propia página --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span>
+  <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://tudominio.com/widget/escapemaster.js<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-token</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>TOKEN_DE_LA_EMPRESA<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-games</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>221,222<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Resident Riddle Barcelona<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-primary</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#c8860a<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#0c0b09<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-font-display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Cinzel<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-font-body</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Inter<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-radius</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0.75rem<span class="token punctuation">"</span></span>
+<span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre><h3 id="82-widget-como-web-component">8.2 Widget como Web Component </h3>
+<p>La implementación ideal para escalar a cientos de salas es encapsular el widget como un <strong>Custom Element</strong>:</p>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token comment">// escapemaster-widget.js</span>
+<span class="token keyword keyword-class">class</span> <span class="token class-name">EscapeMasterWidget</span> <span class="token keyword keyword-extends">extends</span> <span class="token class-name">HTMLElement</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-get">get</span> <span class="token function">observedAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow keyword-return">return</span> <span class="token punctuation">[</span><span class="token string">'token'</span><span class="token punctuation">,</span> <span class="token string">'games'</span><span class="token punctuation">,</span> <span class="token string">'primary'</span><span class="token punctuation">,</span> <span class="token string">'bg'</span><span class="token punctuation">,</span> <span class="token string">'title'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-const">const</span> shadow <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">attachShadow</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'open'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> token   <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">getAttribute</span><span class="token punctuation">(</span><span class="token string">'token'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> games   <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">getAttribute</span><span class="token punctuation">(</span><span class="token string">'games'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">split</span><span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token known-class-name class-name">Number</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> primary <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">getAttribute</span><span class="token punctuation">(</span><span class="token string">'primary'</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'#c8860a'</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> bg      <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">getAttribute</span><span class="token punctuation">(</span><span class="token string">'bg'</span><span class="token punctuation">)</span>      <span class="token operator">||</span> <span class="token string">'#0c0b09'</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-const">const</span> title   <span class="token operator">=</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">getAttribute</span><span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">)</span>   <span class="token operator">||</span> <span class="token string">'EscapeMaster'</span><span class="token punctuation">;</span>
+
+    shadow<span class="token punctuation">.</span><span class="token property-access">innerHTML</span> <span class="token operator">=</span> <span class="token function">buildWidgetHTML</span><span class="token punctuation">(</span><span class="token punctuation">{</span> token<span class="token punctuation">,</span> games<span class="token punctuation">,</span> primary<span class="token punctuation">,</span> bg<span class="token punctuation">,</span> title <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initWidget</span><span class="token punctuation">(</span>shadow<span class="token punctuation">,</span> <span class="token punctuation">{</span> token<span class="token punctuation">,</span> games<span class="token punctuation">,</span> primary<span class="token punctuation">,</span> bg<span class="token punctuation">,</span> title <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">attributeChangedCallback</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> oldVal<span class="token punctuation">,</span> newVal</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow keyword-if">if</span> <span class="token punctuation">(</span>oldVal <span class="token operator">!==</span> newVal<span class="token punctuation">)</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token method function property-access">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// re-renderiza</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+customElements<span class="token punctuation">.</span><span class="token method function property-access">define</span><span class="token punctuation">(</span><span class="token string">'escapemaster-widget'</span><span class="token punctuation">,</span> <span class="token maybe-class-name">EscapeMasterWidget</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token comment">&lt;!-- En cualquier página del cliente --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>escapemaster-widget</span>
+  <span class="token attr-name">token</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1boIAa1xCJAlc30Q<span class="token punctuation">"</span></span>
+  <span class="token attr-name">games</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>221,222<span class="token punctuation">"</span></span>
+  <span class="token attr-name">primary</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#c8860a<span class="token punctuation">"</span></span>
+  <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Mi Escape Room<span class="token punctuation">"</span></span>
+<span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>escapemaster-widget</span><span class="token punctuation">&gt;</span></span>
+</code></pre><h3 id="83-configuración-por-sala-en-json">8.3 Configuración por sala en JSON </h3>
+<p>Cada sala en EscapeMaster almacena su configuración de widget:</p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"room_id"</span><span class="token operator">:</span> <span class="token string">"sala-bcn-001"</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Resident Riddle Barcelona"</span><span class="token punctuation">,</span>
+  <span class="token property">"erd_token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token property">"erd_game_ids"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"widget_config"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"theme"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"primary"</span><span class="token operator">:</span> <span class="token string">"#c8860a"</span><span class="token punctuation">,</span>
+      <span class="token property">"bg"</span><span class="token operator">:</span> <span class="token string">"#0c0b09"</span><span class="token punctuation">,</span>
+      <span class="token property">"surface"</span><span class="token operator">:</span> <span class="token string">"#131210"</span><span class="token punctuation">,</span>
+      <span class="token property">"border"</span><span class="token operator">:</span> <span class="token string">"#2a2620"</span><span class="token punctuation">,</span>
+      <span class="token property">"text"</span><span class="token operator">:</span> <span class="token string">"#e6ddd0"</span><span class="token punctuation">,</span>
+      <span class="token property">"text_muted"</span><span class="token operator">:</span> <span class="token string">"#857a6d"</span><span class="token punctuation">,</span>
+      <span class="token property">"danger"</span><span class="token operator">:</span> <span class="token string">"#c0392b"</span><span class="token punctuation">,</span>
+      <span class="token property">"success"</span><span class="token operator">:</span> <span class="token string">"#27a065"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"typography"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"font_display"</span><span class="token operator">:</span> <span class="token string">"Cinzel"</span><span class="token punctuation">,</span>
+      <span class="token property">"font_body"</span><span class="token operator">:</span> <span class="token string">"Inter"</span><span class="token punctuation">,</span>
+      <span class="token property">"size_scale"</span><span class="token operator">:</span> <span class="token string">"default"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"layout"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"border_radius"</span><span class="token operator">:</span> <span class="token string">"0.75rem"</span><span class="token punctuation">,</span>
+      <span class="token property">"max_width"</span><span class="token operator">:</span> <span class="token string">"860px"</span><span class="token punctuation">,</span>
+      <span class="token property">"spacing"</span><span class="token operator">:</span> <span class="token string">"default"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"branding"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"title"</span><span class="token operator">:</span> <span class="token string">"Resident Riddle Barcelona"</span><span class="token punctuation">,</span>
+      <span class="token property">"subtitle"</span><span class="token operator">:</span> <span class="token string">"Reservas online"</span><span class="token punctuation">,</span>
+      <span class="token property">"logo_url"</span><span class="token operator">:</span> <span class="token null keyword">null</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="9-panel-de-administración--diseño-propuesto">9. Panel de administración — Diseño propuesto </h2>
+<h3 id="91-secciones-del-panel-para-cada-sala">9.1 Secciones del panel para cada sala </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>┌─────────────────────────────────────────────────────────────────┐
+│  PANEL DE ADMIN — EscapeMaster                                  │
+├──────────────┬──────────────────────────────────────────────────┤
+│              │  Sala: Resident Riddle Barcelona                  │
+│  📋 Salas    │  Token ERD: 1boIA••••30Q  [Editar]               │
+│  🎨 Temas    │  Game IDs: 221, 222       [Gestionar]            │
+│  🔑 Tokens   │                                                   │
+│  📊 Stats    │  ┌──── EDITOR DE TEMA ──────────────────────┐    │
+│  ⚙️ Config   │  │                                           │    │
+│              │  │  Colores principales                      │    │
+│              │  │  ┌─────────────┐ ┌──────────────────┐    │    │
+│              │  │  │ Primario    │ │ Fondo            │    │    │
+│              │  │  │ ████ #c8860a│ │ ████ #0c0b09    │    │    │
+│              │  │  └─────────────┘ └──────────────────┘    │    │
+│              │  │                                           │    │
+│              │  │  Tipografía                               │    │
+│              │  │  Display: [Cinzel        ▼]               │    │
+│              │  │  Body:    [Inter         ▼]               │    │
+│              │  │                                           │    │
+│              │  │  Redondez de bordes                       │    │
+│              │  │  ○ Cuadrado  ● Normal  ○ Redondeado       │    │
+│              │  │                                           │    │
+│              │  │  [Vista previa]    [Guardar cambios]      │    │
+│              │  └───────────────────────────────────────────┘    │
+└──────────────┴──────────────────────────────────────────────────┘
+</code></pre><h3 id="92-campos-del-editor-de-tema-admin">9.2 Campos del editor de tema (admin) </h3>
+<pre data-role="codeBlock" data-info="typescript" class="language-typescript typescript"><code><span class="token keyword keyword-interface">interface</span> <span class="token class-name">WidgetThemeConfig</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Colores</span>
+  primary<span class="token operator">:</span>      <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Color de acento (hex)</span>
+  primaryHover<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Hover del acento</span>
+  bg<span class="token operator">:</span>           <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Fondo de la página</span>
+  surface<span class="token operator">:</span>      <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Card principal</span>
+  surface2<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Superficies internas</span>
+  border<span class="token operator">:</span>       <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Bordes</span>
+  text<span class="token operator">:</span>         <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Texto principal</span>
+  textMuted<span class="token operator">:</span>    <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Texto secundario</span>
+  textFaint<span class="token operator">:</span>    <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Placeholders</span>
+
+  <span class="token comment">// Tipografía</span>
+  fontDisplay<span class="token operator">:</span>  <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Fuente de títulos</span>
+  fontBody<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Fuente de UI</span>
+
+  <span class="token comment">// Formas</span>
+  radiusSm<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Border-radius pequeño</span>
+  radiusMd<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Border-radius medio</span>
+  radiusLg<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Border-radius grande</span>
+  radiusXl<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Border-radius card</span>
+
+  <span class="token comment">// Layout</span>
+  maxWidth<span class="token operator">:</span>     <span class="token builtin">string</span><span class="token punctuation">;</span>   <span class="token comment">// Ancho máximo del widget</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="93-generador-de-css-desde-el-panel">9.3 Generador de CSS desde el panel </h3>
+<p>El backend transforma la configuración JSON a variables CSS inline:</p>
+<pre data-role="codeBlock" data-info="javascript" class="language-javascript javascript"><code><span class="token comment">// Backend: genera el bloque &lt;style&gt; personalizado</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">generateWidgetCSS</span><span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword control-flow keyword-return">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+    &lt;style id="em-theme"&gt;
+      :root {
+        --pr:   </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">primary</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --prh:  </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">primaryHover</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --bg:   </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">bg</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --sf:   </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">surface</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --sf2:  </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">surface2</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --bd:   </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">border</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --tx:   </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">text</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --txm:  </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">textMuted</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --txf:  </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">textFaint</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --fd:   '</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">fontDisplay</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">', Georgia, serif;
+        --fb:   '</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">fontBody</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">', sans-serif;
+        --r-sm: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">radiusSm</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --r-md: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">radiusMd</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --r-lg: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">radiusLg</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+        --r-xl: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>config<span class="token punctuation">.</span><span class="token property-access">radiusXl</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">;
+      }
+    &lt;/style&gt;
+  </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="10-esquema-de-base-de-datos-sugerido">10. Esquema de base de datos sugerido </h2>
+<pre data-role="codeBlock" data-info="sql" class="language-sql sql"><code><span class="token comment">-- Empresas / clientes de EscapeMaster</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> companies <span class="token punctuation">(</span>
+  id          UUID <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> gen_random_uuid<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  name        <span class="token keyword keyword-TEXT">TEXT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  slug        <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-UNIQUE">UNIQUE</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  erd_token   <span class="token keyword keyword-TEXT">TEXT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>              <span class="token comment">-- Token de ERD Panel</span>
+  <span class="token keyword keyword-plan">plan</span>        <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'free'</span><span class="token punctuation">,</span>        <span class="token comment">-- free | starter | pro</span>
+  created_at  TIMESTAMPTZ <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Salas individuales</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> rooms <span class="token punctuation">(</span>
+  id          UUID <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> gen_random_uuid<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  company_id  UUID <span class="token keyword keyword-REFERENCES">REFERENCES</span> companies<span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+  erd_game_id <span class="token keyword keyword-INTEGER">INTEGER</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>           <span class="token comment">-- ID de ERD Panel</span>
+  name        <span class="token keyword keyword-TEXT">TEXT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  slug        <span class="token keyword keyword-TEXT">TEXT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  active      <span class="token keyword keyword-BOOLEAN">BOOLEAN</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token keyword keyword-UNIQUE">UNIQUE</span><span class="token punctuation">(</span>company_id<span class="token punctuation">,</span> erd_game_id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Configuración visual del widget por sala</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> widget_configs <span class="token punctuation">(</span>
+  id            UUID <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> gen_random_uuid<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  room_id       UUID <span class="token keyword keyword-REFERENCES">REFERENCES</span> rooms<span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-UNIQUE">UNIQUE</span><span class="token punctuation">,</span>
+  primary_color <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#c8860a'</span><span class="token punctuation">,</span>
+  bg_color      <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#0c0b09'</span><span class="token punctuation">,</span>
+  surface_color <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#131210'</span><span class="token punctuation">,</span>
+  border_color  <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#2a2620'</span><span class="token punctuation">,</span>
+  text_color    <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#e6ddd0'</span><span class="token punctuation">,</span>
+  text_muted    <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'#857a6d'</span><span class="token punctuation">,</span>
+  font_display  <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'Cinzel'</span><span class="token punctuation">,</span>
+  font_body     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'Inter'</span><span class="token punctuation">,</span>
+  radius_sm     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'0.375rem'</span><span class="token punctuation">,</span>
+  radius_md     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'0.5rem'</span><span class="token punctuation">,</span>
+  radius_lg     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'0.75rem'</span><span class="token punctuation">,</span>
+  radius_xl     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'1rem'</span><span class="token punctuation">,</span>
+  max_width     <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'860px'</span><span class="token punctuation">,</span>
+  title         <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  subtitle      <span class="token keyword keyword-TEXT">TEXT</span> <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token string">'Reservas online'</span><span class="token punctuation">,</span>
+  updated_at    TIMESTAMPTZ <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Caché de metadatos de sala (evita llamadas repetidas a ERD)</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> room_meta_cache <span class="token punctuation">(</span>
+  room_id        UUID <span class="token keyword keyword-REFERENCES">REFERENCES</span> rooms<span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span><span class="token punctuation">,</span>
+  background_url <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  capacity       <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  duration       <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+  price          <span class="token keyword keyword-NUMERIC">NUMERIC</span><span class="token punctuation">,</span>
+  genre          <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  age            <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  last_minute    <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  legal_text     <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+  cached_at      TIMESTAMPTZ <span class="token keyword keyword-DEFAULT">DEFAULT</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><hr>
+<h2 id="11-api-rest-interna-de-escapemaster">11. API REST interna de EscapeMaster </h2>
+<p>Para que el panel de admin pueda actualizar la configuración del widget en tiempo real:</p>
+<h3 id="get-apiroomsroomidwidget-config"><code>GET /api/rooms/:roomId/widget-config</code> </h3>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"token"</span><span class="token operator">:</span> <span class="token string">"TU_TOKEN_ESCAPEMASTER"</span><span class="token punctuation">,</span>
+  <span class="token property">"room_id"</span><span class="token operator">:</span> <span class="token string">"uuid-de-la-sala"</span><span class="token punctuation">,</span>
+  <span class="token property">"config"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"primary_color"</span><span class="token operator">:</span> <span class="token string">"#c8860a"</span><span class="token punctuation">,</span>
+    <span class="token property">"font_display"</span><span class="token operator">:</span> <span class="token string">"Cinzel"</span><span class="token punctuation">,</span>
+    <span class="token property">"radius_lg"</span><span class="token operator">:</span> <span class="token string">"0.75rem"</span><span class="token punctuation">,</span>
+    ...
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="patch-apiroomsroomidwidget-config"><code>PATCH /api/rooms/:roomId/widget-config</code> </h3>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"primary_color"</span><span class="token operator">:</span> <span class="token string">"#00e676"</span><span class="token punctuation">,</span>
+  <span class="token property">"font_display"</span><span class="token operator">:</span> <span class="token string">"Playfair Display"</span><span class="token punctuation">,</span>
+  <span class="token property">"bg_color"</span><span class="token operator">:</span> <span class="token string">"#050a05"</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="post-apiroomsroomidvalidate-erd"><code>POST /api/rooms/:roomId/validate-erd</code> </h3>
+<p>Valida el token + game IDs contra la API de ERD:</p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"erd_token"</span><span class="token operator">:</span> <span class="token string">"1boIAa1xCJAlc30Q"</span><span class="token punctuation">,</span>
+  <span class="token property">"erd_game_ids"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">221</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>Respuesta:</strong></p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"valid"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"games"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">221</span><span class="token punctuation">,</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"El Invernadero (Barcelona)"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">222</span><span class="token punctuation">,</span> <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Randalls Party"</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre><h3 id="get-apiroomsroomidembed-code"><code>GET /api/rooms/:roomId/embed-code</code> </h3>
+<p>Devuelve el snippet HTML listo para copiar y pegar en cualquier web:</p>
+<pre data-role="codeBlock" data-info="json" class="language-json json"><code><span class="token punctuation">{</span>
+  <span class="token property">"embed_html"</span><span class="token operator">:</span> <span class="token string">"&lt;script src=\"https://widget.escapemaster.io/v1/em.js\" data-room=\"uuid\" async&gt;&lt;/script&gt;"</span><span class="token punctuation">,</span>
+  <span class="token property">"iframe_url"</span><span class="token operator">:</span> <span class="token string">"https://widget.escapemaster.io/embed/uuid"</span><span class="token punctuation">,</span>
+  <span class="token property">"direct_url"</span><span class="token operator">:</span> <span class="token string">"https://widget.escapemaster.io/sala/resident-riddle-barcelona"</span>
+<span class="token punctuation">}</span>
+</code></pre><hr>
+<h2 id="12-embed-del-widget-por-sala">12. Embed del widget por sala </h2>
+<h3 id="método-1-script-tag-recomendado">Método 1: Script tag (recomendado) </h3>
+<pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span>
+  <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://widget.escapemaster.io/v1/em.js<span class="token punctuation">"</span></span>
+  <span class="token attr-name">data-room</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>uuid-de-la-sala<span class="token punctuation">"</span></span>
+  <span class="token attr-name">async</span>
+<span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p>El script inyecta automáticamente el widget con todos los estilos personalizados cargados desde la API de EscapeMaster.</p>
+<h3 id="método-2-iframe-máximo-aislamiento">Método 2: iFrame (máximo aislamiento) </h3>
+<pre data-role="codeBlock" data-info="html" class="language-html html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iframe</span>
+  <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://widget.escapemaster.io/embed/uuid-de-la-sala<span class="token punctuation">"</span></span>
+  <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span>
+  <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>700px<span class="token punctuation">"</span></span>
+  <span class="token attr-name">frameborder</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span>
+  <span class="token attr-name">allow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>payment<span class="token punctuation">"</span></span>
+  <span class="token attr-name">loading</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lazy<span class="token punctuation">"</span></span>
+<span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>iframe</span><span class="token punctuation">&gt;</span></span>
+</code></pre><h3 id="método-3-html-estático-generado-actual">Método 3: HTML estático generado (actual) </h3>
+<p>Descargar el <code>booking-widget.html</code> ya configurado desde el panel:</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Panel Admin → Sala → Widget → Descargar HTML → subir al servidor del cliente
+</code></pre><hr>
+<h2 id="13-referencia-rápida-de-variables-css">13. Referencia rápida de variables CSS </h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--pr</code></td>
+<td>Color primario / acento</td>
+<td><code>#c8860a</code></td>
+</tr>
+<tr>
+<td><code>--prh</code></td>
+<td>Primario hover</td>
+<td><code>#e09820</code></td>
+</tr>
+<tr>
+<td><code>--pra</code></td>
+<td>Primario active</td>
+<td><code>#f0a830</code></td>
+</tr>
+<tr>
+<td><code>--prg</code></td>
+<td>Primario glow (sombra)</td>
+<td><code>oklch(0.65 0.18 65 / 0.18)</code></td>
+</tr>
+<tr>
+<td><code>--prhl</code></td>
+<td>Primario highlight bg</td>
+<td><code>#281f0e</code></td>
+</tr>
+<tr>
+<td><code>--bg</code></td>
+<td>Fondo página</td>
+<td><code>#0c0b09</code></td>
+</tr>
+<tr>
+<td><code>--sf</code></td>
+<td>Card / superficie</td>
+<td><code>#131210</code></td>
+</tr>
+<tr>
+<td><code>--sf2</code></td>
+<td>Superficie interna</td>
+<td><code>#191714</code></td>
+</tr>
+<tr>
+<td><code>--sf3</code></td>
+<td>Superficie hover</td>
+<td><code>#1f1c18</code></td>
+</tr>
+<tr>
+<td><code>--sfo</code></td>
+<td>Superficie offset</td>
+<td><code>#282420</code></td>
+</tr>
+<tr>
+<td><code>--bd</code></td>
+<td>Borde general</td>
+<td><code>#2a2620</code></td>
+</tr>
+<tr>
+<td><code>--dv</code></td>
+<td>Divisor entre paneles</td>
+<td><code>#201d18</code></td>
+</tr>
+<tr>
+<td><code>--tx</code></td>
+<td>Texto principal</td>
+<td><code>#e6ddd0</code></td>
+</tr>
+<tr>
+<td><code>--txm</code></td>
+<td>Texto muted</td>
+<td><code>#857a6d</code></td>
+</tr>
+<tr>
+<td><code>--txf</code></td>
+<td>Texto faint</td>
+<td><code>#46423c</code></td>
+</tr>
+<tr>
+<td><code>--dng</code></td>
+<td>Error / peligro</td>
+<td><code>#c0392b</code></td>
+</tr>
+<tr>
+<td><code>--dngm</code></td>
+<td>Error muted</td>
+<td><code>#6b2020</code></td>
+</tr>
+<tr>
+<td><code>--suc</code></td>
+<td>Éxito</td>
+<td><code>#27a065</code></td>
+</tr>
+<tr>
+<td><code>--fd</code></td>
+<td>Fuente display</td>
+<td><code>'Cinzel', serif</code></td>
+</tr>
+<tr>
+<td><code>--fb</code></td>
+<td>Fuente body</td>
+<td><code>'Inter', sans-serif</code></td>
+</tr>
+<tr>
+<td><code>--r-sm</code></td>
+<td>Radius pequeño</td>
+<td><code>0.375rem</code></td>
+</tr>
+<tr>
+<td><code>--r-md</code></td>
+<td>Radius medio</td>
+<td><code>0.5rem</code></td>
+</tr>
+<tr>
+<td><code>--r-lg</code></td>
+<td>Radius grande</td>
+<td><code>0.75rem</code></td>
+</tr>
+<tr>
+<td><code>--r-xl</code></td>
+<td>Radius XL (card)</td>
+<td><code>1rem</code></td>
+</tr>
+<tr>
+<td><code>--r-full</code></td>
+<td>Radius píldora</td>
+<td><code>9999px</code></td>
+</tr>
+<tr>
+<td><code>--tr</code></td>
+<td>Transición global</td>
+<td><code>180ms cubic-bezier(...)</code></td>
+</tr>
+<tr>
+<td><code>--sh-sm</code></td>
+<td>Sombra pequeña</td>
+<td><code>0 1px 3px ...</code></td>
+</tr>
+<tr>
+<td><code>--sh-md</code></td>
+<td>Sombra media</td>
+<td><code>0 4px 20px ...</code></td>
+</tr>
+<tr>
+<td><code>--sh-lg</code></td>
+<td>Sombra grande</td>
+<td><code>0 12px 48px ...</code></td>
+</tr>
+<tr>
+<td><code>--sh-gl</code></td>
+<td>Sombra glow</td>
+<td><code>0 0 28px var(--prg)</code></td>
+</tr>
+<tr>
+<td><code>--text-xs</code></td>
+<td>Tamaño fuente XS</td>
+<td><code>clamp(0.75rem, ...)</code></td>
+</tr>
+<tr>
+<td><code>--text-sm</code></td>
+<td>Tamaño fuente SM</td>
+<td><code>clamp(0.875rem, ...)</code></td>
+</tr>
+<tr>
+<td><code>--text-base</code></td>
+<td>Tamaño fuente base</td>
+<td><code>clamp(1rem, ...)</code></td>
+</tr>
+<tr>
+<td><code>--text-lg</code></td>
+<td>Tamaño fuente LG</td>
+<td><code>clamp(1.125rem, ...)</code></td>
+</tr>
+<tr>
+<td><code>--text-xl</code></td>
+<td>Tamaño fuente XL</td>
+<td><code>clamp(1.5rem, ...)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Documentación generada para EscapeMaster Platform · 2026</em><br>
+<em>Para soporte técnico, consultar el repositorio interno de EscapeMaster.</em></p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

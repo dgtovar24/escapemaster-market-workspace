@@ -1,0 +1,49 @@
+# Node
+**/node_modules/
+**/dist/
+**/.astro/
+
+# Archivos sueltos pesados / no-código
+*.pdf
+*.pkg
+*.dmg
+*.iso
+*.tar.gz
+*.zip
+*.html.bak
+
+# Secrets (no commitear nunca)
+**/.env
+**/.env.local
+**/.env.production
+**/.env.development
+client_secret_*.apps.googleusercontent.com.json
+
+# Datos y artefactos
+backups/
+screenshots/
+extracionDeERD/
+cubecli/
+brand-kit/
+kit-marca/
+skills/
+skills-lock.json
+
+# Repos ya trackeados en su propio git
+web/api/.git/
+web/frontend/.git/
+master/.git/
+packages/escapemaster-ui-components/.git/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
