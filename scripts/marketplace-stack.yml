@@ -1,0 +1,218 @@
+version: "3.8"
+
+services:
+  # ============================================================
+  # API v1 (production)
+  # ============================================================
+  api-v1:
+    image: escapemaster-market-api-v1:latest
+    environment:
+      DATABASE_URL: "postgresql://root:${PROD_PG_PASS}@escapemaster-market-postgres-prod:5432/marketdb"
+      PUBLIC_API_URL: "https://escapemaster.es/api/v1"
+      CORS_ORIGINS: "https://escapemaster.es,https://master.escapemaster.es"
+      ENVIRONMENT: "production"
+      API_VERSION: "v1"
+      PORT: "9101"
+      JWT_SECRET: "${JWT_SECRET}"
+      PUBLIC_GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      RESEND_API_KEY: "${RESEND_API_KEY}"
+      STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY}"
+      R2_ACCOUNT_ID: "${R2_ACCOUNT_ID}"
+      R2_ACCESS_KEY_ID: "${R2_ACCESS_KEY_ID}"
+      R2_SECRET_ACCESS_KEY: "${R2_SECRET_ACCESS_KEY}"
+      R2_BUCKET_NAME: "${R2_BUCKET_NAME}"
+      R2_ENDPOINT: "${R2_ENDPOINT}"
+      R2_PUBLIC_BASE_URL: "${R2_PUBLIC_BASE_URL}"
+    networks:
+      - escapemaster-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-api-v1.entrypoints: "websecure"
+        traefik.http.routers.market-api-v1.rule: "Host(`escapemaster.es`) && PathPrefix(`/api/v1`)"
+        traefik.http.routers.market-api-v1.tls: "true"
+        traefik.http.routers.market-api-v1.tls.certresolver: "letsencrypt"
+        traefik.http.services.market-api-v1.loadbalancer.server.port: "9101"
+
+  # ============================================================
+  # API v2 (pre-production)
+  # ============================================================
+  api-v2:
+    image: escapemaster-market-api-v1:latest
+    environment:
+      DATABASE_URL: "postgresql://root:${DEV_PG_PASS}@escapemaster-market-postgres-dev:5432/marketdb"
+      PUBLIC_API_URL: "https://dev.escapemaster.es/api/v2"
+      CORS_ORIGINS: "https://dev.escapemaster.es"
+      ENVIRONMENT: "preproduction"
+      API_VERSION: "v2"
+      PORT: "9102"
+      JWT_SECRET: "${JWT_SECRET}"
+      PUBLIC_GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      RESEND_API_KEY: "${RESEND_API_KEY}"
+      STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY}"
+      R2_ACCOUNT_ID: "${R2_ACCOUNT_ID}"
+      R2_ACCESS_KEY_ID: "${R2_ACCESS_KEY_ID}"
+      R2_SECRET_ACCESS_KEY: "${R2_SECRET_ACCESS_KEY}"
+      R2_BUCKET_NAME: "${R2_BUCKET_NAME}"
+      R2_ENDPOINT: "${R2_ENDPOINT}"
+      R2_PUBLIC_BASE_URL: "${R2_PUBLIC_BASE_URL}"
+    networks:
+      - escapemaster-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-api-v2.entrypoints: "websecure"
+        traefik.http.routers.market-api-v2.rule: "Host(`dev.escapemaster.es`) && PathPrefix(`/api/v2`)"
+        traefik.http.routers.market-api-v2.tls: "true"
+        traefik.http.routers.market-api-v2.tls.certresolver: "letsencrypt"
+        traefik.http.services.market-api-v2.loadbalancer.server.port: "9102"
+
+  # ============================================================
+  # Frontend prod
+  # ============================================================
+  frontend-prod:
+    image: escapemaster-market-frontend-prod:latest
+    environment:
+      PUBLIC_API_URL: "https://escapemaster.es/api/v1"
+      NODE_ENV: "production"
+      PORT: "3101"
+      DATABASE_URL: "postgresql://root:${PROD_PG_PASS}@escapemaster-market-postgres-prod:5432/marketdb"
+      BAUL_DATABASE_URL: "postgresql://root:${PROD_PG_PASS}@escapemaster-market-postgres-prod:5432/marketdb"
+      PUBLIC_STRIPE_KEY: "${PUBLIC_STRIPE_KEY}"
+      PUBLIC_CMS_API_URL: "https://master.escapemaster.es"
+      PUBLIC_GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      R2_PUBLIC_BASE_URL: "${R2_PUBLIC_BASE_URL}"
+    networks:
+      - escapemaster-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-frontend-prod.entrypoints: "websecure"
+        traefik.http.routers.market-frontend-prod.rule: "Host(`escapemaster.es`) && !PathPrefix(`/api/v1`) && !PathPrefix(`/api/v2`)"
+        traefik.http.routers.market-frontend-prod.priority: "1"
+        traefik.http.routers.market-frontend-prod.tls: "true"
+        traefik.http.routers.market-frontend-prod.tls.certresolver: "letsencrypt"
+        traefik.http.services.market-frontend-prod.loadbalancer.server.port: "3101"
+
+  # ============================================================
+  # Frontend dev
+  # ============================================================
+  frontend-dev:
+    image: escapemaster-market-frontend-dev:latest
+    environment:
+      PUBLIC_API_URL: "https://dev.escapemaster.es/api/v2"
+      NODE_ENV: "production"
+      PORT: "3102"
+      DATABASE_URL: "postgresql://root:${DEV_PG_PASS}@escapemaster-market-postgres-dev:5432/marketdb"
+      BAUL_DATABASE_URL: "postgresql://root:${DEV_PG_PASS}@escapemaster-market-postgres-dev:5432/marketdb"
+      PUBLIC_STRIPE_KEY: "${PUBLIC_STRIPE_KEY}"
+      PUBLIC_CMS_API_URL: "https://master.escapemaster.es"
+      PUBLIC_GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      R2_PUBLIC_BASE_URL: "${R2_PUBLIC_BASE_URL}"
+    networks:
+      - escapemaster-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-frontend-dev.entrypoints: "websecure"
+        traefik.http.routers.market-frontend-dev.rule: "Host(`dev.escapemaster.es`) && !PathPrefix(`/api/v1`) && !PathPrefix(`/api/v2`)"
+        traefik.http.routers.market-frontend-dev.priority: "1"
+        traefik.http.routers.market-frontend-dev.tls: "true"
+        traefik.http.routers.market-frontend-dev.tls.certresolver: "letsencrypt"
+        traefik.http.services.market-frontend-dev.loadbalancer.server.port: "3102"
+
+  # ============================================================
+  # Master admin
+  # ============================================================
+  master:
+    image: escapemaster-market-master:latest
+    environment:
+      DATABASE_URL: "postgresql://root:${PROD_PG_PASS}@escapemaster-market-postgres-prod:5432/marketdb"
+      MASTER_USER: "${MASTER_USER}"
+      MASTER_PASS: "${MASTER_PASS}"
+      JWT_SECRET: "${JWT_SECRET}"
+      RESEND_API_KEY: "${RESEND_API_KEY}"
+      PUBLIC_API_URL: "https://escapemaster.es/api/v1"
+      NODE_ENV: "production"
+      PORT: "3103"
+      R2_ACCOUNT_ID: "${R2_ACCOUNT_ID}"
+      R2_ACCESS_KEY_ID: "${R2_ACCESS_KEY_ID}"
+      R2_SECRET_ACCESS_KEY: "${R2_SECRET_ACCESS_KEY}"
+      R2_BUCKET_NAME: "${R2_BUCKET_NAME}"
+      R2_ENDPOINT: "${R2_ENDPOINT}"
+      R2_PUBLIC_BASE_URL: "${R2_PUBLIC_BASE_URL}"
+      PUBLIC_GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      GOOGLE_CLIENT_ID: "${PUBLIC_GOOGLE_CLIENT_ID}"
+      GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
+    networks:
+      - escapemaster-network
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-master.entrypoints: "websecure"
+        traefik.http.routers.market-master.rule: "Host(`master.escapemaster.es`)"
+        traefik.http.routers.market-master.tls: "true"
+        traefik.http.routers.market-master.tls.certresolver: "letsencrypt"
+        traefik.http.services.market-master.loadbalancer.server.port: "3103"
+
+  # ============================================================
+  # WWW redirects (no service, just middleware)
+  # ============================================================
+  www-redirect:
+    image: traefik:v3.6.7
+    networks:
+      - escapemaster-network
+    deploy:
+      replicas: 0
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        traefik.enable: "true"
+        traefik.docker.network: "escapemaster-network"
+        traefik.http.routers.market-www-prod.entrypoints: "websecure"
+        traefik.http.routers.market-www-prod.rule: "Host(`www.escapemaster.es`)"
+        traefik.http.routers.market-www-prod.tls: "true"
+        traefik.http.routers.market-www-prod.tls.certresolver: "letsencrypt"
+        traefik.http.routers.market-www-prod.middlewares: "www-to-nonwww@file"
+        traefik.http.routers.market-www-dev.entrypoints: "websecure"
+        traefik.http.routers.market-www-dev.rule: "Host(`www.dev.escapemaster.es`)"
+        traefik.http.routers.market-www-dev.tls: "true"
+        traefik.http.routers.market-www-dev.tls.certresolver: "letsencrypt"
+        traefik.http.routers.market-www-dev.middlewares: "www-to-nonwww-dev@file"
+        traefik.http.services.market-www-prod-dummy.loadbalancer.server.port: "9999"
+        traefik.http.services.market-www-dev-dummy.loadbalancer.server.port: "9999"
+
+networks:
+  escapemaster-network:
+    external: true

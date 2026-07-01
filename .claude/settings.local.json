@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(python3:*)",
+      "Bash(node check-schema.mjs:*)",
+      "Bash(find /Users/dgtovar/Work/marketplace/web -type f \\\\\\(-name vitest.config.* -o -name playwright.config.* -o -name *.test.* -o -name *.spec.* \\\\\\))",
+      "Bash(find /Users/dgtovar/Work/marketplace/master -type f \\\\\\(-name *.sql -o -name *migration* -o -name *schema* \\\\\\))",
+      "Bash(npm outdated:*)",
+      "Bash(npm update:*)",
+      "Bash(npm install:*)",
+      "Bash(npm audit fix:*)",
+      "Bash(npm run build:*)",
+      "Bash(node tasks/user-test-runner.mjs)",
+      "Bash(npm ls:*)",
+      "mcp__codebase-memory-mcp__list_projects",
+      "mcp__codebase-memory-mcp__index_status"
+    ]
+  }
+}

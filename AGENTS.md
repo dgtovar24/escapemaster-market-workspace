@@ -1,16 +1,28 @@
 # AGENTS.md — EscapeMaster Marketplace
 
-Este workspace co-localiza 5 repositorios git independientes. Debes `cd` al directorio correcto antes de correr comandos git o scripts npm.
+Este workspace co-localiza 8 repositorios git independientes que forman 2 productos íntimamente relacionados: **Marketplace B2C + Admin B2B** y **Gestor de Reservas B2B**. Comparten la DB `marketdb`. Debes `cd` al directorio correcto antes de correr comandos git o scripts npm.
 
 ## Estructura de Repositorios
 
+### Marketplace + Admin
 | App/Package | Workspace Path | Repo en GitHub | Descripción |
 |-------------|----------------|----------------|-------------|
 | Frontend B2C | `web/frontend/` | `dgtovar24/escapemaster-market-frontend` | Astro 6 SSR + React 19, URL: https://escapemaster.es |
 | API | `web/api/` | `dgtovar24/escapemaster-market-api` | Astro 5 SSR (Node), URLs: https://escapemaster.es/api/v1, https://dev.escapemaster.es/api/v2 |
 | Master Admin | `master/` | `dgtovar24/escapemaster-market-admin-panel` | Astro 5 SSR (Node), URL: https://master.escapemaster.es |
 | UI Lib | `packages/escapemaster-ui-components/` | `dgtovar24/escapemaster-branding-kit` | tsup + Vitest, paquete `@diegogzt/ui-components` |
+
+### Booking Manager (comparten `marketdb` con marketplace)
+| App/Package | Workspace Path | Repo en GitHub | Descripción |
+|-------------|----------------|----------------|-------------|
+| Gestor de Reservas (frontend) | `booking-manager/` (symlink a `my-manager`) | `dgtovar24/my-manager` | Next.js 16 + React 19 + Tailwind v4 + dashboard widgets, URL: https://my.escapemaster.es |
+| Gestor de Reservas (API) | `booking-manager-api/` (symlink a `my-manager-api`) | `dgtovar24/my-manager-api` | Rust + Axum 0.7 + sqlx 0.7, URL: https://my.escapemaster.es/api/v1 |
+
+### Infra
+| App/Package | Workspace Path | Repo en GitHub | Descripción |
+|-------------|----------------|----------------|-------------|
 | Deploy | `scripts/` | `dgtovar24/escapemaster-deploy` | Scripts bash + marketplace-stack.yml + Traefik middlewares |
+| Deploy Orchestrator | `.escapemaster-platform-deploy/` (symlink a `escapemaster-platform`) | `dgtovar24/escapemaster-platform` | Orquestador de deploys (CI/CD + scripts para my-manager y my-manager-api) |
 
 > **NOTA:** `web/api` NO está en el workspace npm. Debes `cd` allí y manejar sus dependencias por separado.
 
@@ -127,6 +139,50 @@ docker exec $CURRENT sh -c "cd /app && DATABASE_URL=\$DATABASE_URL npx tsx scrip
 - **Auth**: cookie `master_session` con `secure: true` en producción
 - **DB**: comparte `marketdb_prod` con frontend B2C
 
+### Booking Manager — Frontend (`booking-manager/` → `my-manager`)
+- Next.js 16 (App Router, React 19, server components, server actions)
+- Tailwind v4 con `@theme` block y theming engine (8+ presets de paletas)
+- Zustand (estado global client-side) + React Context (Theme, Auth)
+- Axios (data fetching) con `NEXT_PUBLIC_API_URL` apuntando a `booking-manager-api`
+- `react-grid-layout` (dashboard widgets con drag/resize/persistencia)
+- recharts (gráficos), lucide-react (iconos), @ai-sdk/* (integraciones IA), dnd-kit
+- **Dashboard widgets**: sistema modular con persistencia en localStorage + backend
+- **HR management**: rutas `/hr-management`, `/time-tracking`, `/roles`
+- **Tests**: vitest (unit) + Playwright (e2e) en `e2e/`
+- **Variables bakeadas al build**: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_APP_MODE` (`gestor` | `resident`)
+- **URLs**: dev `:3001`, prod `https://my.escapemaster.es`
+
+### Booking Manager — API (`booking-manager-api/` → `my-manager-api`)
+- Rust 1.x + Axum 0.7 + tokio + tower-http (CORS)
+- sqlx 0.7 con `query!` / `query_as!` macros (validación compile-time contra DB)
+- jsonwebtoken 9 (JWT HS256, claims custom: user_id, organization_id, is_superuser, simulated_*)
+- bcrypt 0.15 (password hashing)
+- chrono + uuid + rust_decimal
+- **Comparten DB con marketplace** (`marketdb`): las migraciones del booking manager AÑADEN tablas y columnas sobre el schema del marketplace
+- **40+ tablas exclusivas**: `roles`, `user_organizations`, `bookings` (extendido), `room_*`, `employee_schedules`, `booking_extras`, `booking_guests`, `external_integrations`, `api_projects`, `api_keys`, `coupons`, `chat_*`, `curated_collections`, `dashboard_templates`, `blocked_slots`, `developer_clients`, etc.
+- **Columnas añadidas a `organizations`**: `legal_name`, `tax_id`, `verification_status`, `invitation_code` (UNIQUE), `booking_manager`, `erd_url`, `widget_commission_rate`, `marketplace_commission_rate`, etc.
+- **URLs**: dev `:9001`, prod `https://my.escapemaster.es/api/v1` (v1) / `https://mydev.escapemaster.es/api/v2` (v2)
+- **NO** usa ORMs — sqlx queries crudas
+- **Auth**: extractor custom `AuthorizedUser` que valida el JWT y expone `auth.user` a los handlers
+- **Endpoints clave**:
+  - `/api/v1/auth/{login,register,refresh,me,logout,onboard}` 
+  - `/api/v1/auth/sso` (futuro, para SSO desde master)
+  - `/api/v1/organizations/{list,create,get,update,delete}` + `/:id/invite`
+  - `/api/v1/bookings/*` con `source_channel` enum (marketplace, widget, direct, api)
+  - `/api/v1/users/:id/invite`, `/api/v1/squads/:id/invite`
+  - `/api/v1/developers/*` (OAuth clients, API keys)
+
+### Vinculación Marketplace ↔ Booking Manager
+
+Las dos apps **comparten la DB `marketdb`** pero **no comparten auth**. El flujo de "vincular" hoy:
+
+1. Master admin entra a `/organizations/{id}` → click "Generar enlace al gestor" → backend crea `invitation_code` (16 hex)
+2. Link generado: `{PUBLIC_BOOKING_MANAGER_URL}/invite/{code}`
+3. Owner hace click → cae en `/invite/{code}` en my-manager → register con `invitation_code` en el body
+4. my-manager-api consume el code, crea `user` + `user_organizations` (auto-vinculado a la org)
+
+**Tablas clave compartidas**: `organizations`, `rooms`, `users`, `players`, `bookings`. CUALQUIER ALTER o DROP en estas debe coordinarse con `db-expert` raíz.
+
 ### Branding Kit (`packages/escapemaster-ui-components/`)
 - tsup (build) + Vitest (test)
 - React 19 + Tailwind
@@ -135,7 +191,9 @@ docker exec $CURRENT sh -c "cd /app && DATABASE_URL=\$DATABASE_URL npx tsx scrip
 
 ## Base de Datos
 
-### Schema (28 tablas en `marketdb`)
+### Schema (70+ tablas en `marketdb` — compartido entre marketplace + booking manager)
+
+**Marketplace (29 tablas en `web/api/migrations/`):**
 - `users`, `players`, `organizations`, `games`, `rooms`, `bookings`, `marketplace_bookings`
 - `calendars`, `room_schedules`, `reviews`
 - `teams`, `team_members`, `user_routes`, `user_route_rooms`
@@ -145,15 +203,32 @@ docker exec $CURRENT sh -c "cd /app && DATABASE_URL=\$DATABASE_URL npx tsx scrip
 - `analytics_*` (5 tablas de analytics)
 - `_migrations` (tracking)
 
-### Sistema de migraciones
-- Archivos en `web/api/migrations/NNN_*.sql`
-- Tracking en tabla `_migrations`
-- Aplicadas en orden por `scripts/apply-pending-migrations.sh --target={prod|dev}`
+**Booking Manager añade 40+ tablas en `booking-manager-api/migrations/`:**
+- `roles`, `role_permissions`, `user_organizations` (membership N:M)
+- `bookings` extendido con `source_channel`, `payment_method`, etc.
+- `external_integrations`, `api_projects`, `api_keys`, `org_api_keys`, `developer_clients`
+- `blocked_slots`, `booking_extras`, `booking_guests`, `booking_commissions`
+- `employee_schedules`, `timeclock`, `vacation`, `level`, `payout`, `invoice`
+- `chat_sessions`, `chat_messages`, `coupons`, `promo`, `gdpr_signatures`
+- `curated_collections`, `dashboard_templates`, `api_keys`, `widget`
+- `collection_rooms`, `room_extras`, `room_notification_recipient`, `integration_calendar_*`
+- `achievement`, `level`, `tpv`, `split_payment`, `payment`, `review` (extendido)
+- `erd_connections`, `erd_sync_state`, `erd_migration_sessions` (EscapeRoomData.com)
+- `email_templates`, `email_verifications`, `email_notification_deliveries`
+- `ai_usage_events`, `api_keys`, `migration_job`, `password_reset`
+- `notification`, `squad`, `timeclock`, `achievement`, `integration_calendar_blocked_dates`
+- Y más...
 
-### Migraciones aplicadas
+### Sistema de migraciones
+- **Marketplace**: archivos en `web/api/migrations/NNN_*.sql`, tracking en tabla `_migrations`
+- **Booking manager**: archivos en `booking-manager-api/migrations/*.sql`, aplicados con su propio `cargo run --bin migrate`
+- Ambos deben coordinarse vía `db-expert` raíz si tocan las 5 tablas compartidas (`organizations`, `rooms`, `users`, `players`, `bookings`)
+
+### Migraciones marketplace aplicadas (local dev)
 - `001_core_schema.sql`: Schema base (28 tablas)
 - `003_analytics_schema.sql`: Tablas de analytics
 - `004_full_room_schema.sql`: Columnas adicionales en rooms/games + tablas themes
+- `005_add_username_column.sql`: Añade columnas faltantes que el código referenciaba pero las migraciones previas no creaban (`username`, `onboarding_completed`, `account_type`, `organization_id`, `last_login`, `hashed_password` rename, players: `xp/rank/referral_code/etc`) + `organizations.invitation_code` y `organizations.booking_manager`
 
 ## Traefik + Routing
 

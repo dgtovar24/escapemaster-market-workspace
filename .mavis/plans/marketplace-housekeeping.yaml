@@ -1,0 +1,148 @@
+version: 1
+plan:
+  name: 'Marketplace housekeeping — limpiar working trees sucios'
+  max_concurrency: 2
+  max_consecutive_failures: 2
+  max_cycles: 6
+  auto_reject_retries: 1
+  verifier_config:
+    default_verifiers: [users-dgtovar-work-marketplace--reviewer]
+    audit_sample_rate: 0.0
+tasks:
+  - id: cleanup-dirty-trees
+    title: 'Resolver 4 working trees sucios en marketplace + .gitignore'
+    assigned_to: users-dgtovar-work-marketplace--developer
+    verified_by: users-dgtovar-work-marketplace--reviewer
+    max_retries: 2
+    prompt: |
+      Scope: housekeeping en el monorepo EscapeMaster (`/Users/dgtovar/Work/marketplace`).
+      Resolver 4 working trees sucios y arreglar `.gitignore` flojo. NO pushear nada,
+      NO crear PRs, NO --force, NO --amend sobre commits existentes, NO --no-verify.
+
+      Estado actual (verificado pre-dispatch — son hechos, no asunciones):
+
+      1) `web/frontend` — rama actual `fix/profile-ui-polish-merged`, ya mergeada al
+         remoto según logs. Working tree: M src/components/react/UserDashboard.tsx
+         con ~638 líneas eliminadas (Header con Rank completo).
+         -> Decidir: ¿estos cambios son residuo descartable
+            (`git checkout -- src/components/react/UserDashboard.tsx`),
+            pertenecen a OTRA rama (stash + nueva rama + apply),
+            o son trabajo intencional nuevo (commitear en rama actual o rama nueva)?
+         Lee el diff con `git diff src/components/react/UserDashboard.tsx` antes de decidir.
+
+      2) `master` — rama `feat/link-orgs-to-booking-manager`. Working tree: M en 6 archivos
+         bajo `.astro/`: content-assets.mjs (-1), content-modules.mjs (-1),
+         content.d.ts (+1), data-store.json (-1), settings.json (M), types.d.ts (-1).
+         Esos archivos son CACHE de build de Astro local. NO deberían estar trackeados.
+         -> Solución esperada: añadir `/.astro/` (o equivalente) al `.gitignore` de master,
+            `git rm --cached -r .astro/`, commit SOLO del gitignore fix,
+            luego descartar cambios de los archivos cacheados
+            (`git checkout -- .astro/` o `git restore .astro/`).
+            Confirma primero que ningún archivo en `.astro/` tiene contenido
+            intencional (`grep -r "intent_marker" .astro/` o inspección directa)
+            antes de descartarlo.
+
+      3) `packages/escapemaster-ui-components` — rama `main`. Working tree:
+         M package.json (12 cambios) + M package-lock.json (-1491 líneas).
+         -> Decidir: ¿es cleanup legítimo? Inspecciona `git diff package.json`
+            (¿version bump? ¿dependencias añadidas/quitadas?) y compara con
+            `git log -5 --oneline` de main para entender el contexto.
+            Si package.json tiene un cambio real pero lock es trim random:
+            regenera lock con `npm install` y commitea ambos juntos.
+            Si ambos son ruido: `git checkout -- package.json package-lock.json`.
+            NO aceptes "delete masive sin entender" como decisión por defecto.
+
+      4) `web/api` — rama `feat/onboarding-preferences-incremental`. Working tree:
+         ?? src/pages/api/v1/uploads/ (directorio untracked).
+         -> Inspecciona qué hay dentro (`ls -la` + `wc -l` en archivos texteables,
+            `file` para binarios). Si es feature WIP válido:
+            añade y commitea (`git add src/pages/api/v1/uploads/` + commit con
+            conventional message). Si es ruido o está vacío:
+            reporta para decisión manual antes de `git clean -fd`.
+
+      Workflow por sub-repo:
+      a. `cd /Users/dgtovar/Work/marketplace/<sub-repo>`
+      b. `git status --short` (estado antes)
+      c. Inspeccionar diff/log/listings según aplique
+      d. Tomar decisión (commit / discard / move)
+      e. Aplicar acción con comandos seguros
+      f. `git status --short` (estado después) y `git log -1 --oneline` si hubo commit
+      g. Si hubo CUALQUIER cambio en archivos (incluso .gitignore):
+         `npm run build` o el comando apropiado. Capturar exit code.
+
+      Stop condition (TODAS deben satisfacerse):
+      - Los 4 working trees están limpios (`git status --short` vacío)
+        O contienen SOLO commits intencionales sin push
+      - El `.gitignore` de master está arreglado si correspondía
+      - Builds pasan en cada sub-repo modificado
+      - Reporte escrito en deliverable.md con tabla
+        `sub-repo | estado antes | decisión | comandos ejecutados | estado después | build exit code`
+
+      Restricciones duras:
+      - NO `git push` de NADA
+      - NO `gh pr create` ni automatización de PR
+      - NO `git commit --amend` sobre commits preexistentes
+      - NO `--force`, `--no-verify`, ni flags que esquiven hooks
+      - Si dudas de una decisión, PARA y reporta bloqueo en lugar de inventar.
+        El orchestrator (Mavis session root) decide cuando vuelvas con la duda.
+
+      Reporta al final con un resumen ejecutivo: 4 decisiones, una por
+      sub-repo, cada una con "commit/hash + mensaje" o "discard/qué se descartó"
+      o "move/a qué rama" o "blocked/necesita decisión humana".
+    verify_prompt: |
+      Eres el reviewer de housekeeping. Valida cada decisión del producer
+      contra evidencia directa de filesystem y git. Sé adversarial pero justo.
+
+      Checks por sub-repo:
+
+      ## 1. `web/frontend` (rama `fix/profile-ui-polish-merged`)
+      - `cd /Users/dgtovar/Work/marketplace/web/frontend && git status --short`
+        debe estar limpio O mostrar commits sin push pendientes
+      - Si hubo commit: `git log -1 --oneline` + `git show HEAD --stat` +
+        `git show HEAD --no-renames` debe mostrar:
+        - Mensaje conventional (feat:/fix:/chore:/docs:)
+        - Modifica solo archivos esperados
+        - No incluye secretos (grep -iE 'password|token|api[_-]?key|secret' en el diff)
+      - Si fue discard: `git diff HEAD -- src/components/react/UserDashboard.tsx` debe
+        estar vacío (archivo vuelve al estado del HEAD)
+
+      ## 2. `master` (rama `feat/link-orgs-to-booking-manager`)
+      - `cat /Users/dgtovar/Work/marketplace/master/.gitignore | grep -E '^\.?/?astro'` debe matchear
+      - `git -C /Users/dgtovar/Work/marketplace/master ls-files .astro/ | wc -l` debe ser 0
+        (cache desacoplado del tracking)
+      - Si hubo commit del fix: `git -C /Users/dgtovar/Work/marketplace/master log -3 --oneline`
+        debe incluirlo
+      - `git status --short` debe estar limpio tras aplicar
+
+      ## 3. `packages/escapemaster-ui-components` (rama `main`)
+      - Si hubo commit: `git diff HEAD~1..HEAD package.json` debe mostrar cambio
+        intencional claro (no whitespace noise)
+      - El lock change debe corresponderse con el package.json change
+        (no es aceptable "trim 1491 lineas sin razón aparente")
+      - Si fue discard: working tree limpio
+      - Inspecciona también `git log -5 --oneline` para entender si el main
+        tiene cambios sin merge anteriores que expliquen el estado
+
+      ## 4. `web/api` (rama `feat/onboarding-preferences-incremental`)
+      - Si hubo commit: `git show HEAD --stat` debe mostrar solo archivos bajo
+        `src/pages/api/v1/uploads/`
+      - `wc -l` en archivos texteables del commit debe ser > 0 (no vacío)
+      - Si fue discard: dir sigue untracked o `git status --short` muestra `??` solo
+        donde el productor documentó
+
+      ## Build gate (TODOS los sub-repos tocados)
+      Si el producer tocó CUALQUIER archivo en un sub-repo (incluido .gitignore),
+      ejecutar build y verificar exit code 0:
+      - `cd /Users/dgtovar/Work/marketplace/web/frontend && npm run build`
+      - `cd /Users/dgtovar/Work/marketplace/master && npm run build`
+      - `cd /Users/dgtovar/Work/marketplace/packages/escapemaster-ui-components && npm run build`
+      - `cd /Users/dgtovar/Work/marketplace/web/api && npm run build`
+
+      Build fallido por cambio del producer → FAIL automático.
+
+      ## Reporte
+      Tabla: sub-repo | decisión | evidencia | veredicto
+
+      PASS solo si TODOS los veredictos son PASS. Si cualquier sub-repo
+      falla individual O build gate falla → FAIL con cita exacta del
+      path/hash/output que rompe.

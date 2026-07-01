@@ -1,0 +1,266 @@
+e cape a ter: Modelo de
+Nivele , Pu to y Recurre cia
+Un sistema diseñado para transformar el consumo puntual en uso recurrente,
+construyendo una plataforma donde los jugadores vuelven para planificar su ocio
+de forma continuada.
+
+VISIÓN ESTRATÉGICA
+
+El Proble a E tructural del Mercado
+El mercado de escape rooms funciona como consumo puntual: el usuario busca,
+reserva, juega y desaparece. Las plataformas tradicionales capturan valor una sola
+vez y pierden la relación inmediatamente después.
+
+Baja Recurre cia
+Usuarios desaparecen tras primera reserva
+
+Las consecuencias son claras: baja recurrencia por usuario, dependencia
+permanente de captación y ausencia de comunidad. Cuando el crecimiento
+depende de captar siempre usuarios nuevos, el coste de adquisición sube y el
+
+Alto CAC
+
+margen se comprime.
+
+Dependencia de captación constante
+
+escapemaster ataca esta raíz: no ser "otra web para reservar", sino el lugar al que
+el jugador vuelve para planificar su ocio.
+
+Si Co u idad
+Ausencia de datos reutilizables
+
+Deci io e E tructurale del
+Modelo
+1
+
+Modelo de Platafor a
+Plataforma de uso recurrente, no marketplace transaccional.
+Aumentar LTV y reducir dependencia de transacciones únicas.
+
+2
+
+Nivele Vitalicio
+Se ganan y no se pierden. Evitar frustración y mantener identidad del
+usuario a largo plazo.
+
+3
+
+Be eficio Rolli g
+Ventana de 12 meses: se reactivan por uso reciente. Reactivación sin
+castigo por inactividad temporal.
+
+4
+
+Si te a de Pu to
+Acciones reales suman; decay anual del 30%. Fomentar uso continuo
+sin ruido de métricas de vanidad.
+
+MODELO ECONÓMICO
+
+Estructura de Comisiones por Recurrencia
+El modelo de comisión incentiva recurrencia mientras protege el margen. Se estructura en tres tramos basados en reservas verificadas en los
+últimos 12 meses, premiando el uso continuo sin erosionar la rentabilidad.
+
+1
+
+2
+
+3
+
+0-5 Reservas
+
+6-20 Reservas
+
++20 Reservas
+
+0,50€ por reserva
+
+0,40€ por reserva
+
+0,30€ por reserva
+
+Usuarios nuevos o esporádicos
+
+Usuarios recurrentes activos
+
+Usuarios de alto valor
+
+Esta estructura evita descuentos prematuros, mantiene una meta aspiracional y es fácil de comunicar al usuario.
+
+Por Qué Nivele e Lugar de De cue to
+El Proble a de lo De cue to
+Usar descuentos como palanca principal destruye el margen y atrae
+usuarios oportunistas. Acostumbra al usuario a pagar menos y
+reduce la percepción de valor del servicio.
+
+La Ve taja de lo Nivele
+Los niveles piden compromiso real primero: reservas verificadas,
+reseñas y uso de funcionalidades. Solo después se habilitan ventajas.
+Esto filtra usuarios de bajo valor y concentra incentivos en usuarios
+rentables.
+El nivel es un desbloqueo estructural que no se pierde. Los
+descuentos son secundarios y puntuales, no el motor del sistema.
+
+PROGRESIÓN
+
+Separación: Histórico vs Uso Reciente
+El diseño central separa estatus y desbloqueos (histórico) de beneficios económicos (uso reciente). Si todo fuera vitalicio, el sistema se
+agotaría; si todo caducara, el usuario se frustraría.
+
+Histórico Vitalicio
+Registra valor total aportado: reservas totales, reseñas, rutas
+completas y nivel máximo alcanzado.
+Construye identidad y evita "empezar de cero" tras inactividad.
+
+Beneficios Rolling 12 Meses
+Comisión por reserva, descuentos puntuales y prioridades
+dependen del uso reciente.
+Mantienen tensión y dan motivo para volver sin frustrar por
+estacionalidad.
+Con esta separación, el usuario conserva identidad y acceso, pero entiende que las ventajas económicas dependen de seguir usando
+escapemaster. Es un patrón probado en programas maduros.
+
+Hito Obligatorio por Nivel
+Para subir de nivel no basta acumular puntos. Existen hitos obligatorios que
+fuerzan al usuario a utilizar funcionalidades distintas, asegurando que usuarios de
+niveles altos han activado hábitos y herramientas del ecosistema.
+
+Nivel 2
+5 reservas verificadas
+
+Nivel 3
+10 reservas + 5 reseñas + 1 funcionalidad clave
+
+Nivel 4
+15 reservas + 10 reseñas + 2 funcionalidades clave
+
+Nivel 5
+25 reservas + 15 reseñas + 2 reservas de ruta completa
+
+FASE 2
+
+Servicio de Alto Valor: Ruta , Reve ta y Equipo
+Ruta Co pleta
+
+Reve ta de Re erva
+
+Co pletar Equipo
+
+Reservar una ruta completa agrupa
+
+Crea un mercado secundario con fee
+
+Convierte intención latente en
+
+varias decisiones en una experiencia,
+
+y evita pérdida para el usuario.
+
+reserva real: usuarios sin grupo o
+
+aumentando GMV por usuario y
+
+Genera tráfico recurrente y
+
+que buscan optimizar coste. Genera
+
+compromiso. Fuerza uso profundo:
+
+confianza en reservar con
+
+reservas que de otro modo no
+
+comparación, planificación y
+
+anticipación.
+
+existirían.
+
+coordinación.
+Estos servicios no son obligatorios para subir de nivel (para no bloquear por contexto), pero suman puntos significativos y pueden activar
+beneficios de prioridad.
+
+Accio e que Cue ta : Valor Real v Va idad
+El sistema define acciones que aportan valor directo y mejoran conversión,
+confianza y ticket medio. Se excluyen acciones de vanidad para mantener la
+señal limpia.
+
+Accio e Pre iada
+Reservas verificadas: Core del negocio, ingresos directos
+
+30%
+
+Reseñas verificadas: Calidad de comunidad y confianza
+Uso de alertas: Retención y reactivación
+Reservas de rutas completas: Alto GMV y compromiso
+Los puntos solo se otorgan por acciones difíciles de falsificar y alineadas
+con ingresos o calidad. Si un usuario progresó, es porque el negocio recibió
+valor o la comunidad ganó calidad.
+
+Decay A ual
+Puntos decaen para mantener uso continuo
+
+100%
+
+Accio e Reale
+Solo fricción verificable suma puntos
+
+MÉTRICAS CLAVE
+
+KPIs para el Consejo
+El consejo debe vigilar métricas que reflejen recurrencia, economía unitaria y adopción de servicios clave. Estas métricas deben analizarse por
+cohortes y canal para medir si el sistema incrementa LTV y reduce dependencia de captación.
+
+1
+
+2
+
+Reservas por Usuario (12m)
+
+% Usuarios Recurrentes
+
+Reservas verificadas por usuario en 12 meses. Tendencia al alza;
+
+Usuarios con
+
+foco en cohortes.
+
+aumentar CAC.
+
+≥2 reservas en 12m / usuarios activos. Subir sin
+
+3
+
+4
+
+GMV por Usuario (12m)
+
+Distribución por Niveles
+
+Valor bruto reservado por usuario en 12 meses. Subir vía rutas y
+
+% de usuarios por nivel. Desplazar masa hacia niveles 3-5.
+
+reventa.
+
+5
+
+6
+
+Adopción Servicios Fase 2
+
+Margen por Reserva
+
+% usuarios que usan rutas/reventa/equipos. Indicador de
+
+Ingresos netos por reserva menos costes. Mantener o mejorar
+
+diferenciación.
+
+con escala.
+
+Recomendación: fijar objetivos trimestrales por cohorte y auditar posibles distorsiones en puntos/hitos (abuso de reseñas,
+cancelaciones, etc.).
+
+

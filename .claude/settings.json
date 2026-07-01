@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "Grep",
+      "Glob",
+      "Task",
+      "TodoWrite",
+      "WebFetch",
+      "Skill",
+      "Question"
+    ],
+    "deny": [
+      "Bash(rm -rf:/)",
+      "Bash(DROP DATABASE:*)",
+      "Bash(TRUNCATE:*)",
+      "Bash(dropdb:*)",
+      "Bash(pg_dump:*)"
+    ]
+  }
+}

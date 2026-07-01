@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas — EscapeMaster Widget</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+      --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+      --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+      --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+      --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+      --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;
+      --sp5:1.25rem;--sp6:1.5rem;--sp8:2rem;--sp10:2.5rem;--sp12:3rem;
+      --fd:'Cinzel','Georgia',serif;
+      --fb:'Inter','Helvetica Neue',sans-serif;
+      --r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+      --tr:180ms cubic-bezier(0.16,1,0.3,1);
+    }
+    [data-theme="dark"]{
+      --bg:#0c0b09;--sf:#131210;--sf2:#191714;--sf3:#1f1c18;--sfo:#282420;
+      --bd:#2a2620;--dv:#201d18;
+      --tx:#e6ddd0;--txm:#857a6d;--txf:#46423c;
+      --pr:#c8860a;--prh:#e09820;--pra:#f0a830;
+      --prg:oklch(.65 .18 65/.18);--prhl:#281f0e;
+      --dng:#c0392b;--dngm:#6b2020;--suc:#27a065;
+      --sh-sm:0 1px 3px oklch(0 0 0/.4);
+      --sh-md:0 4px 20px oklch(0 0 0/.55);
+      --sh-lg:0 12px 48px oklch(0 0 0/.7);
+      --sh-gl:0 0 28px var(--prg);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    body{min-height:100dvh;font-family:var(--fb);font-size:var(--text-base);
+      color:var(--tx);background:var(--bg);line-height:1.6}
+    button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+    img{display:block;max-width:100%;height:auto}
+
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+    /* ── LAYOUT ── */
+    .wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:var(--sp8) var(--sp4)}
+
+    /* ── TOPBAR (Config button) ── */
+    .topbar{display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:var(--sp8);padding:var(--sp3) var(--sp5);
+      background:var(--sf);border:1px solid var(--bd);
+      border-radius:var(--r-lg);box-shadow:var(--sh-sm)}
+    .topbar-left{display:flex;align-items:center;gap:var(--sp3)}
+    .topbar-badge{
+      display:inline-flex;align-items:center;gap:var(--sp2);
+      padding:var(--sp1) var(--sp3);border-radius:var(--r-full);
+      font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+      border:1px solid oklch(from var(--pr) l c h/.4);
+      background:oklch(from var(--pr) l c h/.1);color:var(--pr)}
+    .topbar-token{font-size:var(--text-xs);color:var(--txf);font-family:monospace;
+      letter-spacing:.04em}
+    .btn-cfg{
+      display:inline-flex;align-items:center;gap:var(--sp2);
+      padding:var(--sp2) var(--sp4);border-radius:var(--r-md);
+      font-size:var(--text-xs);font-weight:600;letter-spacing:.06em;
+      border:1px solid var(--bd);color:var(--txm);
+      transition:all var(--tr);text-transform:uppercase}
+    .btn-cfg:hover{border-color:var(--pr);color:var(--pr);background:var(--prhl)}
+    .btn-cfg svg{flex-shrink:0}
+
+    /* ── CONFIG MODAL ── */
+    .modal-bg{
+      position:fixed;inset:0;z-index:100;
+      background:oklch(0 0 0/.75);backdrop-filter:blur(6px);
+      display:none;align-items:center;justify-content:center;padding:var(--sp4)}
+    .modal-bg.open{display:flex;animation:fadeIn .2s ease both}
+    .modal{
+      background:var(--sf);border:1px solid var(--bd);
+      border-radius:var(--r-xl);box-shadow:var(--sh-lg);
+      width:100%;max-width:560px;max-height:90dvh;overflow-y:auto;
+      animation:slideUp .25s cubic-bezier(0.16,1,0.3,1) both}
+    .modal::-webkit-scrollbar{width:4px}
+    .modal::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+    .modal-head{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:var(--sp5) var(--sp6);
+      border-bottom:1px solid var(--dv);position:sticky;top:0;
+      background:var(--sf);z-index:1}
+    .modal-title{font-family:var(--fd);font-size:var(--text-sm);
+      letter-spacing:.1em;text-transform:uppercase;color:var(--tx)}
+    .modal-close{width:32px;height:32px;border-radius:var(--r-md);
+      border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;
+      transition:all var(--tr)}
+    .modal-close:hover{border-color:var(--dng);color:var(--dng)}
+    .modal-body{padding:var(--sp6)}
+    .modal-section{margin-bottom:var(--sp6)}
+    .modal-section:last-child{margin-bottom:0}
+    .cfg-label{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;
+      color:var(--txm);margin-bottom:var(--sp2)}
+    .cfg-desc{font-size:var(--text-xs);color:var(--txf);margin-bottom:var(--sp3);line-height:1.7}
+    .cfg-input{
+      width:100%;background:var(--sf2);border:1px solid var(--bd);
+      border-radius:var(--r-md);padding:var(--sp3) var(--sp4);
+      font-size:var(--text-sm);color:var(--tx);font-family:monospace;
+      transition:border-color var(--tr),box-shadow var(--tr);outline:none}
+    .cfg-input::placeholder{color:var(--txf)}
+    .cfg-input:focus{border-color:var(--pr);box-shadow:0 0 0 3px oklch(from var(--pr) l c h/.12)}
+    .cfg-input.error{border-color:var(--dng);box-shadow:0 0 0 3px oklch(from var(--dng) l c h/.12)}
+    .cfg-hint{font-size:10px;color:var(--txf);margin-top:var(--sp2);
+      display:flex;align-items:center;gap:var(--sp1)}
+
+    /* Games list in config */
+    .games-list{display:flex;flex-direction:column;gap:var(--sp2);margin-bottom:var(--sp3)}
+    .game-row{
+      display:flex;align-items:center;gap:var(--sp3);
+      background:var(--sf2);border:1px solid var(--bd);
+      border-radius:var(--r-md);padding:var(--sp3) var(--sp4)}
+    .game-row.loading{opacity:.6}
+    .gr-id{font-family:monospace;font-size:var(--text-sm);color:var(--pr);
+      font-weight:600;min-width:50px;flex-shrink:0}
+    .gr-name{flex:1;font-size:var(--text-sm);color:var(--tx);min-width:0;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gr-name.loading-name{color:var(--txf);font-style:italic}
+    .gr-status{font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+      padding:2px var(--sp2);border-radius:var(--r-full);flex-shrink:0}
+    .gr-status.ok{color:var(--suc);background:oklch(from var(--suc) l c h/.12);
+      border:1px solid oklch(from var(--suc) l c h/.3)}
+    .gr-status.err{color:var(--dng);background:oklch(from var(--dng) l c h/.12);
+      border:1px solid oklch(from var(--dng) l c h/.3)}
+    .gr-status.checking{color:var(--txm);background:var(--sfo);border:1px solid var(--bd)}
+    .gr-del{width:28px;height:28px;border-radius:var(--r-md);
+      border:1px solid var(--bd);display:flex;align-items:center;
+      justify-content:center;transition:all var(--tr);flex-shrink:0;color:var(--txf)}
+    .gr-del:hover{border-color:var(--dng);color:var(--dng);background:oklch(from var(--dng) l c h/.1)}
+
+    .add-game-row{display:flex;gap:var(--sp2)}
+    .add-game-row .cfg-input{flex:1;margin:0}
+
+    /* Status banner in modal */
+    .cfg-status{
+      margin-top:var(--sp4);padding:var(--sp3) var(--sp4);
+      border-radius:var(--r-md);font-size:var(--text-xs);
+      display:none;align-items:center;gap:var(--sp2)}
+    .cfg-status.show{display:flex}
+    .cfg-status.ok{background:oklch(from var(--suc) l c h/.1);
+      border:1px solid oklch(from var(--suc) l c h/.3);color:var(--suc)}
+    .cfg-status.err{background:oklch(from var(--dng) l c h/.1);
+      border:1px solid oklch(from var(--dng) l c h/.3);color:var(--dng)}
+    .cfg-status.info{background:oklch(from var(--pr) l c h/.08);
+      border:1px solid oklch(from var(--pr) l c h/.3);color:var(--pr)}
+
+    .modal-foot{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:var(--sp4) var(--sp6);border-top:1px solid var(--dv);
+      gap:var(--sp3);flex-wrap:wrap}
+
+    /* ── HEADER ── */
+    .hdr{text-align:center;margin-bottom:var(--sp10)}
+    .logo{display:inline-flex;align-items:center;gap:var(--sp3);margin-bottom:var(--sp4)}
+    .logo svg{color:var(--pr)}
+    .logo-title{font-family:var(--fd);font-size:var(--text-xl);font-weight:600;
+      letter-spacing:.12em;text-transform:uppercase}
+    .logo-sub{font-size:var(--text-xs);color:var(--txm);letter-spacing:.07em;
+      text-transform:uppercase;margin-top:2px}
+    .orn{display:flex;align-items:center;gap:var(--sp3);margin:var(--sp4) auto 0;max-width:280px}
+    .orn-l{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--pr),transparent)}
+    .orn-d{width:6px;height:6px;background:var(--pr);transform:rotate(45deg);flex-shrink:0}
+
+    /* ── STEPS ── */
+    .steps{display:flex;align-items:center;justify-content:center;
+      gap:var(--sp2);margin-bottom:var(--sp8)}
+    .si{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);
+      letter-spacing:.06em;text-transform:uppercase;color:var(--txf);transition:color var(--tr)}
+    .si.active{color:var(--pr)}
+    .si.done{color:var(--txm)}
+    .sn{width:24px;height:24px;border-radius:var(--r-full);border:1px solid currentColor;
+      display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;
+      flex-shrink:0;transition:background var(--tr),border-color var(--tr)}
+    .si.active .sn{background:var(--pr);border-color:var(--pr);color:#0c0b09;
+      box-shadow:0 0 12px var(--prg)}
+    .si.done .sn{background:var(--sfo);border-color:var(--bd)}
+    .sc{width:28px;height:1px;background:var(--bd);flex-shrink:0}
+
+    /* ── CARD ── */
+    .card{background:var(--sf);border:1px solid var(--bd);
+      border-radius:var(--r-xl);box-shadow:var(--sh-lg);overflow:hidden}
+
+    /* ── VIEWS ── */
+    .view{display:none;animation:fadeIn .3s cubic-bezier(0.16,1,0.3,1) both}
+    .view.active{display:block}
+
+    /* ── GAME CARDS ── */
+    .games-wrap{padding:var(--sp6)}
+    .slabel{font-family:var(--fd);font-size:var(--text-xs);letter-spacing:.14em;
+      text-transform:uppercase;color:var(--pr);margin-bottom:var(--sp4)}
+    .games-grid{display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));
+      gap:var(--sp4);margin-bottom:var(--sp5)}
+    .gc{position:relative;border-radius:var(--r-lg);overflow:hidden;cursor:pointer;
+      border:2px solid var(--bd);transition:border-color var(--tr),box-shadow var(--tr);
+      min-height:200px;display:flex;flex-direction:column;justify-content:flex-end}
+    .gc:focus-visible{outline:2px solid var(--pr);outline-offset:3px}
+    .gc-bg{position:absolute;inset:0;background-size:cover;background-position:center;
+      background-color:var(--sf2);transition:transform .4s ease;z-index:0}
+    .gc:hover .gc-bg{transform:scale(1.04)}
+    .gc-ov{position:absolute;inset:0;background:linear-gradient(to top,
+      oklch(.08 .02 50/.95) 0%,oklch(.08 .02 50/.5) 50%,transparent 100%);z-index:1}
+    .gc-cnt{position:relative;z-index:2;padding:var(--sp5)}
+    .gc-tags{display:flex;gap:var(--sp2);flex-wrap:wrap;margin-bottom:var(--sp2)}
+    .tag{display:inline-flex;align-items:center;padding:2px var(--sp2);
+      border-radius:var(--r-full);font-size:10px;letter-spacing:.07em;
+      text-transform:uppercase;font-weight:600;border:1px solid;backdrop-filter:blur(4px)}
+    .tag-g{color:var(--pr);border-color:oklch(from var(--pr) l c h/.4);
+      background:oklch(from var(--pr) l c h/.12)}
+    .tag-a{color:var(--txm);border-color:var(--bd);background:oklch(.08 0 0/.4)}
+    .gc-name{font-family:var(--fd);font-size:var(--text-lg);font-weight:600;
+      color:#fff;text-shadow:0 2px 8px oklch(0 0 0/.6);margin-bottom:var(--sp2)}
+    .gc-meta{display:flex;gap:var(--sp4);flex-wrap:wrap}
+    .gc-meta span{font-size:var(--text-xs);color:rgba(230,221,208,.75);
+      display:flex;align-items:center;gap:4px}
+    .gc-chk{position:absolute;top:var(--sp3);right:var(--sp3);z-index:3;
+      width:28px;height:28px;border-radius:var(--r-full);background:var(--pr);
+      display:none;align-items:center;justify-content:center;
+      box-shadow:0 0 12px var(--prg)}
+    .gc.selected{border-color:var(--pr);box-shadow:var(--sh-gl)}
+    .gc.selected .gc-chk{display:flex}
+    .gc-loading{display:flex;align-items:center;justify-content:center;
+      min-height:140px;color:var(--txf);font-size:var(--text-sm);gap:var(--sp3)}
+    .spinner{width:20px;height:20px;border:2px solid var(--bd);
+      border-top-color:var(--pr);border-radius:50%;
+      animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── DIVIDER ── */
+    .divider{height:1px;background:linear-gradient(to right,
+      transparent,var(--dv) 20%,var(--dv) 80%,transparent)}
+
+    /* ── CALENDAR + SLOTS ── */
+    .cal-slots{display:grid;grid-template-columns:1fr 1fr;gap:0}
+    @media(max-width:580px){.cal-slots{grid-template-columns:1fr}}
+    .panel{padding:var(--sp6)}
+    .panel+.panel{border-left:1px solid var(--dv)}
+    @media(max-width:580px){.panel+.panel{border-left:none;border-top:1px solid var(--dv)}}
+    .cal-nav{display:flex;align-items:center;justify-content:space-between;
+      margin-bottom:var(--sp4)}
+    .cnb{width:32px;height:32px;border-radius:var(--r-md);
+      border:1px solid var(--bd);background:var(--sf2);
+      display:flex;align-items:center;justify-content:center;
+      transition:border-color var(--tr),background var(--tr)}
+    .cnb:hover{border-color:var(--pr);background:var(--prhl)}
+    .cal-month{font-family:var(--fd);font-size:var(--text-sm);
+      letter-spacing:.1em;text-transform:uppercase}
+    .cal-wd{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;
+      margin-bottom:var(--sp2)}
+    .cal-wd span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--txf);padding:var(--sp1) 0}
+    .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+    .day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+      font-size:var(--text-xs);border-radius:var(--r-md);cursor:pointer;
+      position:relative;transition:background var(--tr),color var(--tr);color:var(--txm)}
+    .day.empty,.day.free{cursor:default;color:var(--txf)}
+    .day.past{color:var(--txf);cursor:not-allowed}
+    .day.available{color:var(--tx)}
+    .day.available::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;
+      border-radius:var(--r-full);background:var(--pr);opacity:.8}
+    .day.available:hover{background:var(--sfo)}
+    .day.complete{color:var(--txf);cursor:not-allowed}
+    .day.complete::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;
+      border-radius:var(--r-full);background:var(--dngm);opacity:.6}
+    .day.selected{background:var(--pr)!important;color:#0c0b09!important;
+      font-weight:700;box-shadow:0 0 12px var(--prg)}
+    .day.selected::after{display:none}
+    .day.today:not(.selected){border:1px solid oklch(from var(--pr) l c h/.5);color:var(--pr)}
+    .cal-legend{display:flex;gap:var(--sp4);margin-top:var(--sp4);flex-wrap:wrap}
+    .leg{display:flex;align-items:center;gap:var(--sp2);font-size:var(--text-xs);color:var(--txm)}
+    .leg-dot{width:8px;height:8px;border-radius:var(--r-full)}
+    .leg-dot.av{background:var(--pr)}
+    .leg-dot.fu{background:var(--dngm)}
+    .slots-date{font-family:var(--fd);font-size:var(--text-sm);color:var(--tx);margin-top:var(--sp1)}
+    .slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(88px,100%),1fr));
+      gap:var(--sp2)}
+    .slot{padding:var(--sp2) var(--sp3);background:var(--sf2);
+      border:1px solid var(--bd);border-radius:var(--r-md);text-align:center;
+      font-size:var(--text-xs);cursor:pointer;transition:all var(--tr)}
+    .slot .st{color:var(--tx);font-weight:600}
+    .slot .ss{font-size:10px;color:var(--txf);margin-top:2px}
+    .slot:not(.blocked):hover{border-color:var(--pr);background:var(--prhl)}
+    .slot.selected{border-color:var(--pr);
+      background:color-mix(in oklch,var(--pr) 12%,var(--sf2));
+      box-shadow:0 0 10px var(--prg)}
+    .slot.selected .st{color:var(--pr)}
+    .slot.blocked{opacity:.4;cursor:not-allowed}
+    .slot.last-spots{border-color:oklch(from #e0a020 l c h/.5)}
+    .slot.last-spots .ss{color:#e0a020}
+    .no-date{display:flex;align-items:center;justify-content:center;height:120px;
+      color:var(--txf);font-size:var(--text-sm);text-align:center;
+      flex-direction:column;gap:var(--sp2)}
+
+    /* ── SKELETON ── */
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    .sk{background:linear-gradient(90deg,var(--sf2) 25%,var(--sf3) 50%,var(--sf2) 75%);
+      background-size:200% 100%;animation:shimmer 1.6s ease-in-out infinite;border-radius:var(--r-sm)}
+    .sk-day{aspect-ratio:1;border-radius:var(--r-md)}
+    .sk-slot{height:50px;border-radius:var(--r-md)}
+
+    /* ── FORM ── */
+    .form-wrap{padding:var(--sp6)}
+    .sum-bar{background:var(--sf2);border:1px solid var(--bd);
+      border-radius:var(--r-lg);padding:var(--sp4) var(--sp5);
+      display:flex;align-items:center;gap:var(--sp4);flex-wrap:wrap;margin-bottom:var(--sp6)}
+    .si-item{display:flex;flex-direction:column;gap:2px;flex:1;min-width:80px}
+    .si-k{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--txf)}
+    .si-v{font-size:var(--text-sm);font-weight:500;color:var(--tx)}
+    .si-v.hl{color:var(--pr)}
+    .form-grid{display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));
+      gap:var(--sp4);margin-bottom:var(--sp5)}
+    .fg{display:flex;flex-direction:column;gap:var(--sp2)}
+    .fg.full{grid-column:1/-1}
+    .flbl{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--txm)}
+    .finput{background:var(--sf2);border:1px solid var(--bd);
+      border-radius:var(--r-md);padding:var(--sp3) var(--sp4);
+      font-size:var(--text-sm);color:var(--tx);font-family:var(--fb);
+      transition:border-color var(--tr),box-shadow var(--tr);outline:none;width:100%}
+    .finput::placeholder{color:var(--txf)}
+    .finput:focus{border-color:var(--pr);box-shadow:0 0 0 3px oklch(from var(--pr) l c h/.12)}
+    .finput.error{border-color:var(--dng)}
+    select.finput{appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23857a6d' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right var(--sp3) center;padding-right:var(--sp8)}
+    .lm-alert{display:flex;gap:var(--sp3);align-items:flex-start;
+      background:oklch(from var(--pr) l c h/.08);
+      border:1px solid oklch(from var(--pr) l c h/.3);
+      border-radius:var(--r-md);padding:var(--sp3) var(--sp4);
+      margin-bottom:var(--sp5);font-size:var(--text-xs);color:var(--txm)}
+    .lm-alert svg{color:var(--pr);flex-shrink:0;margin-top:1px}
+    .rgpd{font-size:var(--text-xs);color:var(--txm);line-height:1.7;
+      padding:var(--sp4);background:var(--sf2);border:1px solid var(--bd);
+      border-radius:var(--r-md);max-height:90px;overflow-y:auto;margin-bottom:var(--sp3)}
+    .rgpd::-webkit-scrollbar{width:4px}
+    .rgpd::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+    .chk-row{display:flex;align-items:flex-start;gap:var(--sp3);margin-bottom:var(--sp5)}
+    .chk-row input[type=checkbox]{width:16px;height:16px;margin-top:2px;
+      accent-color:var(--pr);cursor:pointer;flex-shrink:0}
+    .chk-row label{font-size:var(--text-xs);color:var(--txm);cursor:pointer}
+    .price-row{display:flex;align-items:center;justify-content:space-between;
+      padding:var(--sp4) 0;border-top:1px solid var(--dv);margin-bottom:var(--sp5)}
+    .price-lbl{font-size:var(--text-sm);color:var(--txm)}
+    .price-total{font-family:var(--fd);font-size:var(--text-xl);
+      color:var(--pr);letter-spacing:.05em}
+
+    /* ── BUTTONS ── */
+    .btn{display:inline-flex;align-items:center;justify-content:center;
+      gap:var(--sp2);padding:var(--sp3) var(--sp6);border-radius:var(--r-md);
+      font-size:var(--text-sm);font-weight:600;letter-spacing:.04em;cursor:pointer;
+      transition:all var(--tr);border:1px solid transparent;font-family:var(--fb)}
+    .btn-pr{background:var(--pr);color:#0c0b09;border-color:var(--pr);
+      box-shadow:0 0 16px var(--prg)}
+    .btn-pr:hover:not(:disabled){background:var(--prh);border-color:var(--prh);
+      box-shadow:0 0 28px var(--prg),0 4px 16px oklch(0 0 0/.4);transform:translateY(-1px)}
+    .btn-pr:disabled{opacity:.4;cursor:not-allowed;transform:none}
+    .btn-gh{border-color:var(--bd);color:var(--txm)}
+    .btn-gh:hover{border-color:var(--pr);color:var(--pr);background:var(--prhl)}
+    .btn-sm{padding:var(--sp2) var(--sp4);font-size:var(--text-xs)}
+    .btn-row{display:flex;align-items:center;justify-content:space-between;
+      gap:var(--sp3);flex-wrap:wrap}
+    .nav-bot{padding:var(--sp4) var(--sp6);display:flex;
+      justify-content:space-between;align-items:center}
+
+    /* ── SUCCESS ── */
+    .success{padding:var(--sp12) var(--sp6);text-align:center;
+      display:flex;flex-direction:column;align-items:center;gap:var(--sp5)}
+    .suc-icon{width:64px;height:64px;border-radius:var(--r-full);
+      background:color-mix(in oklch,var(--suc) 12%,var(--sf2));
+      border:1px solid var(--suc);display:flex;align-items:center;justify-content:center;
+      animation:pop .4s cubic-bezier(0.16,1,0.3,1) both}
+    .suc-title{font-family:var(--fd);font-size:var(--text-xl);
+      letter-spacing:.1em;text-transform:uppercase}
+    .bcode{background:var(--sf2);border:1px solid var(--pr);
+      border-radius:var(--r-lg);padding:var(--sp4) var(--sp8);
+      font-family:var(--fd);font-size:var(--text-lg);letter-spacing:.2em;
+      color:var(--pr);box-shadow:var(--sh-gl)}
+
+    /* ── FOOTER ── */
+    .ftr{text-align:center;margin-top:var(--sp6);font-size:var(--text-xs);color:var(--txf)}
+    .ftr a{color:var(--txf);text-decoration:none}
+    .ftr a:hover{color:var(--pr)}
+
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+    :focus-visible{outline:2px solid var(--pr);outline-offset:3px;border-radius:var(--r-sm)}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    @media(max-width:480px){.si span:not(.sn){display:none}.sc{width:16px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- TOP CONFIG BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>
+        Widget activo
+      </span>
+      <span class="topbar-token" id="topbar-token-display">Token: ••••••••</span>
+    </div>
+    <button class="btn-cfg" id="btn-open-cfg" aria-label="Configurar widget">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.07 4.93a10 10 0 0 1 1.72 14.96M4.93 19.07A10 10 0 0 1 3.21 4.11M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      Configurar
+    </button>
+  </div>
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="logo">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Logo">
+        <rect x="11" y="17" width="14" height="11" rx="2" fill="currentColor" opacity=".9"/>
+        <path d="M13 17v-4a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" opacity=".55"/>
+        <circle cx="18" cy="22" r="1.5" fill="#0c0b09"/>
+        <line x1="18" y1="23.5" x2="18" y2="26" stroke="#0c0b09" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-title" id="widget-title">EscapeMaster</div>
+        <div class="logo-sub">Reservas online</div>
+      </div>
+    </div>
+    <div class="orn" aria-hidden="true">
+      <div class="orn-l"></div><div class="orn-d"></div><div class="orn-l"></div>
+    </div>
+  </header>
+
+  <!-- STEPS -->
+  <nav class="steps" aria-label="Pasos">
+    <div class="si active" id="si1"><span class="sn">1</span><span>Sala</span></div>
+    <div class="sc" aria-hidden="true"></div>
+    <div class="si" id="si2"><span class="sn">2</span><span>Fecha</span></div>
+    <div class="sc" aria-hidden="true"></div>
+    <div class="si" id="si3"><span class="sn">3</span><span>Datos</span></div>
+    <div class="sc" aria-hidden="true"></div>
+    <div class="si" id="si4"><span class="sn">4</span><span>Confirmación</span></div>
+  </nav>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <!-- VIEW 1: GAMES -->
+    <div class="view active" id="v1">
+      <div class="games-wrap">
+        <div class="slabel">Elige tu experiencia</div>
+        <div class="games-grid" id="games-grid">
+          <div class="gc-loading"><div class="spinner"></div> Cargando salas…</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end">
+          <button class="btn btn-pr" id="btn-go2" disabled>
+            Elegir fecha
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: CALENDAR + SLOTS -->
+    <div class="view" id="v2">
+      <div class="divider"></div>
+      <div class="cal-slots">
+        <div class="panel">
+          <div class="slabel">Selecciona una fecha</div>
+          <div class="cal-nav">
+            <button class="cnb" id="cal-prev" aria-label="Mes anterior">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <span class="cal-month" id="cal-month"></span>
+            <button class="cnb" id="cal-next" aria-label="Mes siguiente">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="cal-wd" aria-hidden="true">
+            <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+          </div>
+          <div class="cal-days" id="cal-days" role="grid"></div>
+          <div class="cal-legend">
+            <div class="leg"><div class="leg-dot av"></div>Disponible</div>
+            <div class="leg"><div class="leg-dot fu"></div>Completo</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="slabel">Horarios</div>
+          <div class="slots-date" id="slots-lbl">— Elige una fecha</div>
+          <div style="margin-top:var(--sp4)" id="slots-area">
+            <div class="no-date">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4">
+                <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              <span>Selecciona un día</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="nav-bot">
+        <button class="btn btn-gh" id="btn-back1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          Volver
+        </button>
+        <button class="btn btn-pr" id="btn-go3" disabled>
+          Continuar
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- VIEW 3: FORM -->
+    <div class="view" id="v3">
+      <div class="form-wrap">
+        <div class="slabel" style="margin-bottom:var(--sp5)">Tus datos</div>
+        <div class="sum-bar">
+          <div class="si-item"><span class="si-k">Sala</span><span class="si-v" id="s-game">—</span></div>
+          <div class="si-item"><span class="si-k">Fecha</span><span class="si-v" id="s-date">—</span></div>
+          <div class="si-item"><span class="si-k">Hora</span><span class="si-v hl" id="s-time">—</span></div>
+          <div class="si-item"><span class="si-k">Duración</span><span class="si-v" id="s-dur">70 min</span></div>
+        </div>
+        <div class="lm-alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="lm-text">Llama para reservas con menos de 24h.</span>
+        </div>
+        <form id="bform" novalidate>
+          <div class="form-grid">
+            <div class="fg">
+              <label class="flbl" for="f-name">Nombre *</label>
+              <input class="finput" type="text" id="f-name" placeholder="Tu nombre" required autocomplete="given-name">
+            </div>
+            <div class="fg">
+              <label class="flbl" for="f-email">Email *</label>
+              <input class="finput" type="email" id="f-email" placeholder="tu@email.com" required autocomplete="email">
+            </div>
+            <div class="fg">
+              <label class="flbl" for="f-phone">Teléfono *</label>
+              <input class="finput" type="tel" id="f-phone" placeholder="+34 600 000 000" required autocomplete="tel">
+            </div>
+            <div class="fg">
+              <label class="flbl" for="f-players">Jugadores *</label>
+              <select class="finput" id="f-players" required>
+                <option value="">Selecciona...</option>
+              </select>
+            </div>
+            <div class="fg full" id="exp-group"></div>
+          </div>
+          <div class="rgpd" id="rgpd-text">Cargando política de privacidad...</div>
+          <div class="chk-row">
+            <input type="checkbox" id="chk-rgpd">
+            <label for="chk-rgpd">He leído y acepto la política de privacidad *</label>
+          </div>
+          <div class="price-row">
+            <span class="price-lbl">Total (<span id="p-n">0</span> jug. × <span id="p-price">30</span> €)</span>
+            <span class="price-total" id="p-total">0 €</span>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-gh" id="btn-back2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+              Volver
+            </button>
+            <button type="submit" class="btn btn-pr" id="btn-pay">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+              Realizar pago
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- VIEW 4: SUCCESS -->
+    <div class="view" id="v4">
+      <div class="success">
+        <div class="suc-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#27a065" stroke-width="2.5"><path d="m5 12 5 5L19 7"/></svg>
+        </div>
+        <h1 class="suc-title">¡Reserva Completada!</h1>
+        <p style="font-size:var(--text-sm);color:var(--txm);max-width:40ch;text-align:center">
+          Te hemos enviado la confirmación por email. ¡Prepárate para escapar!
+        </p>
+        <div class="bcode" id="bcode">ESC-XXXXXX</div>
+        <p style="font-size:var(--text-xs);color:var(--txf)">Muestra este código en recepción</p>
+        <button class="btn btn-gh" id="btn-new">Nueva reserva</button>
+      </div>
+    </div>
+
+  </div><!-- /card -->
+
+  <footer class="ftr">
+    Widget personalizable · Powered by <a href="https://erdpanel.com" target="_blank" rel="noopener">ERD Panel</a>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CONFIG MODAL
+═══════════════════════════════════════════ -->
+<div class="modal-bg" id="modal-bg" role="dialog" aria-modal="true" aria-label="Configuración del widget">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:var(--sp3)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--pr)" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93a10 10 0 0 1 1.72 14.96M4.93 19.07A10 10 0 0 1 3.21 4.11"/>
+        </svg>
+        <span class="modal-title">Configuración del Widget</span>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- TOKEN -->
+      <div class="modal-section">
+        <div class="cfg-label">Token de autenticación</div>
+        <div class="cfg-desc">Token único de tu cuenta ERD Panel. Lo encuentras en el snippet HTML del widget original en el atributo <code style="color:var(--pr);font-size:10px">data-token</code>.</div>
+        <input class="cfg-input" type="text" id="cfg-token"
+          placeholder="ej: 1boIAa1xCJAlc30Q" autocomplete="off" spellcheck="false">
+        <div class="cfg-hint">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          El token se valida contra la API al guardar
+        </div>
+        <div class="cfg-status" id="token-status"></div>
+      </div>
+
+      <div style="height:1px;background:var(--dv);margin:var(--sp5) 0"></div>
+
+      <!-- GAMES -->
+      <div class="modal-section">
+        <div class="cfg-label">Game IDs activos</div>
+        <div class="cfg-desc">IDs de las salas que aparecerán en el widget. Añade o elimina según necesites. El nombre se resuelve automáticamente contra la API.</div>
+        <div class="games-list" id="cfg-games-list"></div>
+        <div class="add-game-row">
+          <input class="cfg-input" type="number" id="cfg-new-id"
+            placeholder="Añadir ID (ej: 221)" min="1" style="flex:1">
+          <button class="btn btn-pr btn-sm" id="btn-add-game">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Añadir
+          </button>
+        </div>
+        <div class="cfg-status" id="games-status"></div>
+      </div>
+
+      <div style="height:1px;background:var(--dv);margin:var(--sp5) 0"></div>
+
+      <!-- TITLE -->
+      <div class="modal-section">
+        <div class="cfg-label">Título del widget</div>
+        <input class="cfg-input" type="text" id="cfg-title"
+          placeholder="ej: Resident Riddle Barcelona" style="font-family:var(--fb)">
+      </div>
+
+    </div><!-- /modal-body -->
+
+    <div class="modal-foot">
+      <button class="btn btn-gh btn-sm" id="btn-reset-cfg">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Restaurar demo
+      </button>
+      <div style="display:flex;gap:var(--sp3)">
+        <button class="btn btn-gh btn-sm" id="btn-cancel-cfg">Cancelar</button>
+        <button class="btn btn-pr btn-sm" id="btn-save-cfg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Guardar y recargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ══════════════════════════════
+   DEFAULT CONFIG
+══════════════════════════════ */
+const DEFAULTS = {
+  token: '1boIAa1xCJAlc30Q',
+  gameIds: [221, 222],
+  title: 'Resident Riddle Barcelona'
+};
+
+const BASE = 'https://erdpanel.com/api';
+const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const today = new Date();
+
+/* ══════════════════════════════
+   STATE
+══════════════════════════════ */
+let CFG = { ...DEFAULTS };       // current running config
+let DRAFT = {};                  // draft being edited in modal
+let GAMES_META = {};             // id -> {name, capacity, duration, price, ...}
+let ST = { game:null, date:null, time:null, calY:0, calM:0, monthCache:{} };
+
+/* ══════════════════════════════
+   API
+══════════════════════════════ */
+async function apiPost(path, body) {
+  const r = await fetch(BASE + path, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+/* ── Fetch game meta by id ── */
+async function fetchGameMeta(token, gameId) {
+  const data = await apiPost('/prices', { token, game: gameId });
+  const g = data.game;
+  if (!g) throw new Error('Game not found');
+  const [capMin, capMax] = (g.capacity||'2 a 6').split(' a ').map(Number);
+  return {
+    id: g.id, name: g.name,
+    capacity: g.capacity, capMin: isNaN(capMin)?2:capMin, capMax: isNaN(capMax)?6:capMax,
+    duration: g.duration||60, price: g.pay||30,
+    bg: g.background_url||'', lm: g.last_minute_text||'',
+    genre: g.genre||'Escape Room', age: g.age||'12+'
+  };
+}
+
+/* ── Fetch names for multiple IDs (for modal) ── */
+async function fetchGameNames(token, ids) {
+  const res = await apiPost('/games', { token, games: ids });
+  // returns [{id, name}, ...]
+  const map = {};
+  if (Array.isArray(res)) res.forEach(g => { map[g.id] = g.name; });
+  return map;
+}
+
+/* ══════════════════════════════
+   STEP NAVIGATION
+══════════════════════════════ */
+function goStep(n) {
+  document.querySelectorAll('.view').forEach((v,i) => v.classList.toggle('active', i+1===n));
+  ['si1','si2','si3','si4'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.className = 'si' + (i+1===n?' active':i+1<n?' done':'');
+  });
+}
+
+/* ══════════════════════════════
+   GAME CARDS
+══════════════════════════════ */
+async function loadAndRenderGames() {
+  const grid = document.getElementById('games-grid');
+  grid.innerHTML = '<div class="gc-loading"><div class="spinner"></div> Cargando salas…</div>';
+  document.getElementById('btn-go2').disabled = true;
+  ST.game = null;
+
+  try {
+    const metas = await Promise.all(
+      CFG.gameIds.map(id => fetchGameMeta(CFG.token, id).catch(() => null))
+    );
+    GAMES_META = {};
+    metas.forEach((m,i) => { if(m) GAMES_META[CFG.gameIds[i]] = m; });
+    renderGameCards();
+  } catch(e) {
+    grid.innerHTML = `<div class="gc-loading" style="color:var(--dng)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+      Error al cargar. Revisa el token y los IDs.
+    </div>`;
+  }
+}
+
+function renderGameCards() {
+  const grid = document.getElementById('games-grid');
+  const validIds = Object.keys(GAMES_META).map(Number);
+  if (validIds.length === 0) {
+    grid.innerHTML = '<div class="gc-loading" style="color:var(--dng)">No se encontraron salas válidas.</div>';
+    return;
+  }
+  grid.innerHTML = '';
+  validIds.forEach(id => {
+    const g = GAMES_META[id];
+    const card = document.createElement('div');
+    card.className = 'gc';
+    card.setAttribute('data-id', id);
+    card.setAttribute('tabindex','0');
+    card.setAttribute('role','button');
+    card.setAttribute('aria-pressed','false');
+
+    const bgStyle = g.bg
+      ? `background-image:url('${g.bg}')`
+      : `background:linear-gradient(135deg,var(--sf2),var(--sf3))`;
+
+    card.innerHTML = `
+      <div class="gc-bg" style="${bgStyle}"></div>
+      <div class="gc-ov"></div>
+      <div class="gc-cnt">
+        <div class="gc-tags">
+          <span class="tag tag-g">${g.genre}</span>
+          <span class="tag tag-a">${g.age}+</span>
+        </div>
+        <div class="gc-name">${g.name}</div>
+        <div class="gc-meta">
+          <span>⏱ ${g.duration} min</span>
+          <span>👥 ${g.capacity}</span>
+          <span>💶 ${g.price} €/pers.</span>
+        </div>
+      </div>
+      <div class="gc-chk" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0c0b09" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg>
+      </div>`;
+
+    const select = () => {
+      document.querySelectorAll('.gc').forEach(c => {
+        c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
+      });
+      card.classList.add('selected');
+      card.setAttribute('aria-pressed','true');
+      ST.game = id;
+      document.getElementById('btn-go2').disabled = false;
+    };
+    card.addEventListener('click', select);
+    card.addEventListener('keydown', e => {
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();select();}
+    });
+    grid.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════
+   CALENDAR
+══════════════════════════════ */
+async function initCal() {
+  ST.calY = today.getFullYear();
+  ST.calM = today.getMonth();
+  ST.monthCache = {};
+  await loadMonth(ST.calY, ST.calM);
+  renderCal();
+}
+
+async function loadMonth(y, m) {
+  const key = `${y}-${m}`;
+  if (ST.monthCache[key] !== undefined) return;
+  renderCalSkeleton();
+  try {
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-01`;
+    const data = await apiPost('/schedules/month', {token:CFG.token, game:[Number(ST.game)], date:dateStr});
+    ST.monthCache[key] = Array.isArray(data) && typeof data[0] === 'string' ? data : [];
+  } catch(e) { ST.monthCache[key] = []; }
+  renderCal();
+}
+
+function renderCalSkeleton() {
+  const g = document.getElementById('cal-days');
+  g.innerHTML = Array(35).fill('<div class="day sk sk-day"></div>').join('');
+}
+
+function renderCal() {
+  const {calY:y, calM:m} = ST;
+  document.getElementById('cal-month').textContent = `${MONTHS[m]} ${y}`;
+  const key = `${y}-${m}`;
+  const avail = ST.monthCache[key] || [];
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  let fd = new Date(y, m, 1).getDay();
+  fd = fd===0?6:fd-1;
+  const grid = document.getElementById('cal-days');
+  grid.innerHTML = '';
+  for(let i=0;i<fd;i++){
+    const e=document.createElement('div');e.className='day empty';grid.appendChild(e);
+  }
+  for(let d=1;d<=daysInMonth;d++){
+    const cell = document.createElement('div');
+    cell.setAttribute('role','gridcell');
+    const status = avail[d-1] || 'free';
+    const dateObj = new Date(y,m,d);
+    const isPast = dateObj < new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const isToday = (y===today.getFullYear()&&m===today.getMonth()&&d===today.getDate());
+    const isSel = ST.date&&ST.date.y===y&&ST.date.m===m&&ST.date.d===d;
+    cell.textContent = d;
+    cell.className = 'day';
+    if(isSel){ cell.classList.add('selected'); }
+    else if(isPast){ cell.classList.add('past'); }
+    else if(status==='available'){ 
+      cell.classList.add('available');
+      cell.setAttribute('tabindex','0');
+      cell.addEventListener('click',()=>selectDate(y,m,d));
+      cell.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDate(y,m,d);}});
+    } else if(status==='complete'){
+      cell.classList.add('complete');
+    } else { cell.classList.add('free'); }
+    if(isToday&&!isSel) cell.classList.add('today');
+    grid.appendChild(cell);
+  }
+}
+
+async function selectDate(y,m,d) {
+  ST.date={y,m,d}; ST.time=null;
+  renderCal();
+  document.getElementById('btn-go3').disabled=true;
+  document.getElementById('slots-lbl').textContent=`${d} de ${MONTHS[m]} de ${y}`;
+  const area=document.getElementById('slots-area');
+  area.innerHTML='<div class="slots-grid">'+Array(6).fill('<div class="sk sk-slot"></div>').join('')+'</div>';
+  try {
+    const dateStr=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const data = await apiPost('/schedules', {token:CFG.token, game:[Number(ST.game)], date:dateStr});
+    // API returns [[...slot_objs...]] when game is array — always take index 0
+    const slots = Array.isArray(data) && Array.isArray(data[0]) ? data[0] : (Array.isArray(data) ? data : []);
+    renderSlots(slots, area);
+  } catch(e) {
+    area.innerHTML='<div class="no-date"><span>Error al cargar horarios</span></div>';
+  }
+}
+
+function renderSlots(slots, area) {
+  if(!slots||slots.length===0){
+    area.innerHTML='<div class="no-date"><span>Sin horarios disponibles</span></div>';
+    return;
+  }
+  const grid=document.createElement('div');
+  grid.className='slots-grid';
+  slots.forEach(slot=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    const isBlocked = slot.status===3||slot.status===2;
+    const isLast = slot.status===1;
+    btn.className='slot'+(isBlocked?' blocked':isLast?' last-spots':'');
+    btn.innerHTML=`<div class="st">${slot.time}</div>
+      <div class="ss">${isBlocked?'Completo':isLast?'Últimas plazas':'Disponible'}</div>`;
+    if(!isBlocked){
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.slot').forEach(s=>s.classList.remove('selected'));
+        btn.classList.add('selected');
+        ST.time=slot.time;
+        document.getElementById('btn-go3').disabled=false;
+      });
+    } else { btn.disabled=true; }
+    grid.appendChild(btn);
+  });
+  area.innerHTML=''; area.appendChild(grid);
+}
+
+/* ══════════════════════════════
+   BOOKING FORM
+══════════════════════════════ */
+function setupForm() {
+  const g = GAMES_META[ST.game];
+  if(!g) return;
+  document.getElementById('s-game').textContent = g.name;
+  const d=ST.date;
+  document.getElementById('s-date').textContent = `${d.d} ${MONTHS[d.m]}`;
+  document.getElementById('s-time').textContent = ST.time+' h';
+  document.getElementById('s-dur').textContent = g.duration+' min';
+  document.getElementById('lm-text').textContent = g.lm || 'Consulta disponibilidad para reservas de último minuto.';
+  document.getElementById('p-price').textContent = g.price;
+
+  const sel=document.getElementById('f-players');
+  sel.innerHTML='<option value="">Selecciona...</option>';
+  for(let i=g.capMin;i<=g.capMax;i++){
+    const o=document.createElement('option');
+    o.value=i; o.textContent=i+' jugador'+(i===1?'':'es');
+    sel.appendChild(o);
+  }
+  sel.addEventListener('change',function(){
+    const n=parseInt(this.value)||0;
+    document.getElementById('p-n').textContent=n;
+    document.getElementById('p-total').textContent=(n*g.price)+' €';
+  });
+
+  document.getElementById('rgpd-text').textContent=
+    'RESIDENT RIDDLE S.L. tratará tus datos para gestionar la reserva solicitada, '+
+    'conforme al Reglamento (UE) 2016/679 (GDPR). Puedes ejercer tus derechos de '+
+    'acceso, rectificación y supresión escribiendo a reservas@residentriddle.es.';
+
+  const expG=document.getElementById('exp-group');
+  expG.innerHTML=`<label class="flbl" for="f-exp">¿Cuántos escape rooms habéis jugado?</label>
+    <select class="finput" id="f-exp">
+      <option value="">Selecciona...</option>
+      <option>Nuestra primera vez</option>
+      <option>Menos de 5</option>
+      <option>Entre 5 y 20</option>
+      <option>Más de 20</option>
+    </select>`;
+}
+
+/* ══════════════════════════════
+   CONFIG MODAL
+══════════════════════════════ */
+function openModal() {
+  DRAFT = {
+    token: CFG.token,
+    gameIds: [...CFG.gameIds],
+    title: CFG.title
+  };
+  document.getElementById('cfg-token').value = DRAFT.token;
+  document.getElementById('cfg-title').value = DRAFT.title;
+  renderModalGamesList();
+  clearStatuses();
+  document.getElementById('modal-bg').classList.add('open');
+  document.getElementById('cfg-token').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+}
+
+function clearStatuses() {
+  ['token-status','games-status'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.className='cfg-status'; el.textContent='';
+  });
+  document.getElementById('cfg-token').classList.remove('error');
+}
+
+function setStatus(id, type, msg) {
+  const el=document.getElementById(id);
+  el.className=`cfg-status show ${type}`;
+  el.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${
+    type==='ok'?'<path d="m5 12 5 5L19 7"/>':
+    type==='err'?'<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/>':
+    '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>'
+  }</svg> ${msg}`;
+}
+
+/* Render the game rows inside the modal */
+function renderModalGamesList() {
+  const list=document.getElementById('cfg-games-list');
+  list.innerHTML='';
+  if(DRAFT.gameIds.length===0){
+    list.innerHTML='<div style="font-size:var(--text-xs);color:var(--txf);padding:var(--sp3)">Sin salas configuradas. Añade al menos una.</div>';
+    return;
+  }
+  DRAFT.gameIds.forEach(id=>{
+    const row=document.createElement('div');
+    row.className='game-row';
+    row.id=`gr-${id}`;
+    const meta = GAMES_META[id];
+    row.innerHTML=`
+      <span class="gr-id">#${id}</span>
+      <span class="gr-name ${meta?'':'loading-name'}" id="grn-${id}">${meta?meta.name:'Verificando…'}</span>
+      <span class="gr-status ${meta?'ok':'checking'}" id="grs-${id}">${meta?'OK':'…'}</span>
+      <button class="gr-del" data-id="${id}" aria-label="Eliminar sala ${id}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>
+      </button>`;
+    row.querySelector('.gr-del').addEventListener('click',()=>removeGame(id));
+    list.appendChild(row);
+    // If we don't have meta, try to fetch it
+    if(!meta){
+      const t = document.getElementById('cfg-token').value.trim() || DRAFT.token;
+      fetchGameMeta(t, id).then(m=>{
+        document.getElementById(`grn-${id}`).textContent=m.name;
+        document.getElementById(`grn-${id}`).classList.remove('loading-name');
+        document.getElementById(`grs-${id}`).textContent='OK';
+        document.getElementById(`grs-${id}`).className='gr-status ok';
+        GAMES_META[id]=m;
+      }).catch(()=>{
+        document.getElementById(`grn-${id}`).textContent='No encontrado';
+        document.getElementById(`grs-${id}`).textContent='Error';
+        document.getElementById(`grs-${id}`).className='gr-status err';
+      });
+    }
+  });
+}
+
+function removeGame(id) {
+  DRAFT.gameIds = DRAFT.gameIds.filter(i=>i!==id);
+  renderModalGamesList();
+  if(DRAFT.gameIds.length===0) setStatus('games-status','err','Añade al menos un game ID.');
+  else clearStatuses();
+}
+
+async function addGame() {
+  const input=document.getElementById('cfg-new-id');
+  const id=parseInt(input.value);
+  if(!id||id<1){ input.classList.add('error'); return; }
+  input.classList.remove('error');
+  if(DRAFT.gameIds.includes(id)){
+    setStatus('games-status','info',`El ID ${id} ya está en la lista.`);
+    return;
+  }
+  const token=document.getElementById('cfg-token').value.trim()||DRAFT.token;
+  setStatus('games-status','info','Verificando sala…');
+  try {
+    const meta=await fetchGameMeta(token, id);
+    GAMES_META[id]=meta;
+    DRAFT.gameIds.push(id);
+    renderModalGamesList();
+    setStatus('games-status','ok',`"${meta.name}" añadida correctamente.`);
+    input.value='';
+  } catch(e){
+    setStatus('games-status','err',`ID ${id} no encontrado con el token actual.`);
+  }
+}
+
+async function saveConfig() {
+  const newToken=document.getElementById('cfg-token').value.trim();
+  const newTitle=document.getElementById('cfg-title').value.trim();
+  if(!newToken){ document.getElementById('cfg-token').classList.add('error'); return; }
+  if(DRAFT.gameIds.length===0){ setStatus('games-status','err','Añade al menos un game ID.'); return; }
+
+  const btn=document.getElementById('btn-save-cfg');
+  btn.disabled=true; btn.textContent='Guardando…';
+
+  // Validate token by calling /api/games
+  try {
+    await apiPost('/games', { token:newToken, games:DRAFT.gameIds });
+  } catch(e){
+    setStatus('token-status','err','Token inválido o sin acceso a los games indicados.');
+    document.getElementById('cfg-token').classList.add('error');
+    btn.disabled=false; btn.textContent='Guardar y recargar';
+    return;
+  }
+
+  // Reload metas with new token if token changed
+  if(newToken !== CFG.token) {
+    GAMES_META={};
+    try {
+      const metas=await Promise.all(DRAFT.gameIds.map(id=>fetchGameMeta(newToken,id).catch(()=>null)));
+      metas.forEach((m,i)=>{ if(m) GAMES_META[DRAFT.gameIds[i]]=m; });
+    } catch(e){}
+  }
+
+  CFG = { token:newToken, gameIds:[...DRAFT.gameIds], title:newTitle||'EscapeMaster' };
+  updateTopbar();
+  document.getElementById('widget-title').textContent = CFG.title;
+
+  // Reset booking state
+  ST={game:null,date:null,time:null,calY:0,calM:0,monthCache:{}};
+  goStep(1);
+  closeModal();
+  await loadAndRenderGames();
+  btn.disabled=false; btn.textContent='Guardar y recargar';
+}
+
+function resetToDemo() {
+  DRAFT = { ...DEFAULTS, gameIds:[...DEFAULTS.gameIds] };
+  document.getElementById('cfg-token').value = DRAFT.token;
+  document.getElementById('cfg-title').value = DRAFT.title;
+  GAMES_META={};
+  renderModalGamesList();
+  clearStatuses();
+  setStatus('token-status','info','Configuración de demo restaurada.');
+}
+
+function updateTopbar() {
+  const t=CFG.token;
+  document.getElementById('topbar-token-display').textContent =
+    'Token: '+t.substring(0,4)+'••••'+t.substring(t.length-4);
+}
+
+/* ══════════════════════════════
+   EVENTS
+══════════════════════════════ */
+document.getElementById('btn-open-cfg').addEventListener('click', openModal);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('btn-cancel-cfg').addEventListener('click', closeModal);
+document.getElementById('modal-bg').addEventListener('click', e=>{
+  if(e.target===document.getElementById('modal-bg')) closeModal();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+document.getElementById('btn-add-game').addEventListener('click', addGame);
+document.getElementById('cfg-new-id').addEventListener('keydown', e=>{
+  if(e.key==='Enter'){e.preventDefault();addGame();}
+});
+document.getElementById('btn-save-cfg').addEventListener('click', saveConfig);
+document.getElementById('btn-reset-cfg').addEventListener('click', resetToDemo);
+
+document.getElementById('btn-go2').addEventListener('click', ()=>{goStep(2);initCal();});
+document.getElementById('btn-go3').addEventListener('click', ()=>{goStep(3);setupForm();});
+document.getElementById('btn-back1').addEventListener('click', ()=>goStep(1));
+document.getElementById('btn-back2').addEventListener('click', ()=>goStep(2));
+
+document.getElementById('cal-prev').addEventListener('click', async()=>{
+  ST.calM--; if(ST.calM<0){ST.calM=11;ST.calY--;}
+  await loadMonth(ST.calY,ST.calM); renderCal();
+});
+document.getElementById('cal-next').addEventListener('click', async()=>{
+  ST.calM++; if(ST.calM>11){ST.calM=0;ST.calY++;}
+  await loadMonth(ST.calY,ST.calM); renderCal();
+});
+
+document.getElementById('bform').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const players=document.getElementById('f-players').value;
+  const rgpd=document.getElementById('chk-rgpd').checked;
+  let ok=true;
+  [['f-name',name],['f-email',email],['f-phone',phone],['f-players',players]].forEach(([id,v])=>{
+    document.getElementById(id).classList.toggle('error',!v);
+    if(!v) ok=false;
+  });
+  if(!rgpd){document.getElementById('chk-rgpd').style.outline='2px solid var(--dng)';ok=false;}
+  else{document.getElementById('chk-rgpd').style.outline='';}
+  if(!ok) return;
+  const btn=document.getElementById('btn-pay');
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Procesando...';
+  await new Promise(r=>setTimeout(r,1400));
+  const code='RR-'+Math.random().toString(36).substring(2,8).toUpperCase();
+  document.getElementById('bcode').textContent=code;
+  goStep(4);
+});
+
+document.getElementById('btn-new').addEventListener('click',()=>{
+  ST={game:null,date:null,time:null,calY:0,calM:0,monthCache:{}};
+  document.querySelectorAll('.gc').forEach(c=>{
+    c.classList.remove('selected'); c.setAttribute('aria-pressed','false');
+  });
+  document.getElementById('btn-go2').disabled=true;
+  document.getElementById('bform').reset();
+  document.getElementById('p-n').textContent='0';
+  document.getElementById('p-total').textContent='0 €';
+  const btn=document.getElementById('btn-pay');
+  btn.disabled=false;
+  btn.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Realizar pago`;
+  goStep(1);
+});
+
+/* ══════════════════════════════
+   INIT
+══════════════════════════════ */
+updateTopbar();
+document.getElementById('widget-title').textContent = CFG.title;
+loadAndRenderGames();
+
+})();
+</script>
+</body>
+</html>

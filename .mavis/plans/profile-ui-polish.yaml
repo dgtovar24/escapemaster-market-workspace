@@ -1,0 +1,274 @@
+version: 1
+plan:
+  name: 'Polish UI del perfil del jugador — 6 issues'
+  max_concurrency: 3
+  max_consecutive_failures: 2
+  max_cycles: 6
+  auto_reject_retries: 1
+  verifier_config:
+    default_verifiers:
+      - users-dgtovar-work-marketplace--reviewer
+    audit_sample_rate: 0.0
+
+tasks:
+  # ====================================================================
+  # PRODUCER 1 — web/frontend/src/pages/[lang]/profile.astro
+  # ====================================================================
+  - id: fix-profile-astro
+    title: 'profile.astro: barra XP vacía + dedupe sidebar'
+    assigned_to: users-dgtovar-work-marketplace--developer
+    verified_by: users-dgtovar-work-marketplace--reviewer
+    max_retries: 2
+    prompt: |
+      Eres el producer de 1 archivo del sub-repo `web/frontend` de EscapeMaster.
+
+      ## Working directory y rama
+      - cd `/Users/dgtovar/Work/marketplace`
+      - Rama de trabajo: crea `git switch -c fix/profile-ui-polish-A` desde `main`
+      - Tu único archivo a tocar: `web/frontend/src/pages/[lang]/profile.astro`
+      - NO toques otros archivos (UserDashboard.tsx lo lleva otro producer en paralelo)
+      - Conventional commits. Cuando termines, haz commit local con mensaje `fix(profile): polish xp bar + sidebar dedupe`
+      - NO push, NO PR — sólo commit local. El orquestador decide merge.
+
+      ## Issues a resolver EN ESTE ARCHIVO
+
+      ### Issue 2 — Barra XP visualmente engañosa cuando XP=0
+
+      La barra de XP en la tarjeta del usuario (líneas ~142-152):
+      ```
+      <div class="h-1.5 sm:h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div id="xpProgress" class="h-full bg-amber-400 transition-all duration-500" style="width: 0%"></div>
+      </div>
+      <p class="text-[10px] sm:text-xs text-gray-400 mt-1 text-center" id="xpToNext">0 / 500 XP</p>
+      ```
+
+      Problema: cuando el usuario tiene 0 XP, el `<div>` interno tiene `width: 0%` (vacío, correcto) pero el contenedor padre `bg-gray-200` se ve completamente relleno en gris sólido. Visualmente da la sensación de "100% deshabilitado" en lugar de vacío.
+
+      Decisión de diseño (recomendada, ciñete o propone alternativa equivalente):
+      - Cuando progress === 0, mostrar el contenedor con un fondo más sutil: por ejemplo `bg-gray-100` o `bg-tropical-secondary/5` en lugar de `bg-gray-200`. Y el indicador interno en `0%` debería mantener un color de marca tenue.
+      - Alternativa aceptable: añadir un patrón diagonal sutil `bg-[linear-gradient(...)]` que dé pista de "vacío/trayecto".
+      - **No** rellenes la barra con un color que parezca progreso real al 0%.
+
+      Implementa el cambio y deja un comentario de Astro `{/* XP bar: subtle bg at 0% to avoid looking filled */}`.
+
+      ### Issue 3 — Dedupe "Ajustes" y "Notificaciones"
+
+      El array `menuItems` del sidebar (líneas ~64-70) contiene los 5 items:
+      ```
+      { key: 'history', icon: 'clock', href: `/${lang}/profile/history` },
+      { key: 'favorites', icon: 'heart', href: `/${lang}/profile/favorites` },
+      { key: 'notifications', icon: 'bell', href: `/${lang}/profile?tab=notifications` },
+      { key: 'editProfile', icon: 'user', href: `/${lang}/profile/edit` },
+      { key: 'settings', icon: 'settings', href: `/${lang}/profile/settings` },
+      ```
+
+      **Decisión arquitectónica unificada para TODO el perfil** (compartida con el producer paralelo de UserDashboard.tsx):
+
+      - Sidebar = navegación a páginas dedicadas full-page (history, favorites, edit).
+      - Pestañas centrales del `UserDashboard` = vistas activas del dashboard (bookings, routes, achievements, credits, notifications).
+      - **Ajustes**: el sidebar enlaza a `/profile/settings` (página completa) — MANTENER. La pestaña central "Ajustes" del dashboard será ELIMINADA por el otro producer (es redundante con el sidebar).
+      - **Notificaciones**: la pestaña central "Avisos" del UserDashboard será RENOMBRADA a "Notificaciones" por el otro producer (unifica el término). El sidebar item `notifications` (que apunta a `?tab=notifications`) es **REDUNDANTE** y debe ELIMINARSE — con la pestaña central activa, no hace falta enlace adicional.
+
+      Por tanto:
+      - **ELIMINA** `{ key: 'notifications', icon: 'bell', href: `/${lang}/profile?tab=notifications` },` del array.
+      - **MANTÉN** `{ key: 'settings', icon: 'settings', href: `/${lang}/profile/settings` },`.
+      - Resultado esperado del array: 4 items (history, favorites, editProfile, settings).
+      - El `icons` Record sigue siendo válido aunque ya no se use 'bell' — déjalo como está, no limpies a menos que sea trivial.
+
+      Si tu worker session del equipo paralelo ya hizo cambios en este archivo, REBASA sobre su rama (`git rebase`) o mergea antes de commitear. Si no, sólo commitea tus cambios.
+
+      ## Constraints (obliga)
+      - Respeta tokens tropical-* — NUNCA hex hardcoded ni `text-gray-*` para CTAs/fondos primarios. Para XP bar sutil se acepta `gray-*` semánticamente.
+      - NO añadas dependencias nuevas.
+      - Mantén compatibilidad i18n (es/en) — los textos no son los cambiados, pero asegúrate de no romper traducciones existentes.
+      - Mobile-first: el cambio de la barra XP no debe romper el breakpoint `sm:`.
+
+      ## Deliverable
+      Reporta al final:
+      1. Diff resumido (qué líneas/cambios).
+      2. Hash del commit local.
+      3. Captura visual si tienes Playwright, o descripción del render esperado en mobile y desktop.
+    verify_prompt: |
+      Verifica el commit del producer sobre `web/frontend/src/pages/[lang]/profile.astro` en la rama `fix/profile-ui-polish-A`.
+
+      Procedimiento independiente (NO leas el reporte del producer):
+
+      1. `git -C /Users/dgtovar/Work/marketplace log fix/profile-ui-polish-A --oneline -5` — confirma que hay un commit con prefijo `fix(profile):`.
+      2. `git -C /Users/dgtovar/Work/marketplace diff main..fix/profile-ui-polish-A -- web/frontend/src/pages/[lang]/profile.astro` — inspecciona el diff.
+      3. Verifica las 6 condiciones:
+         a. La barra XP ya NO usa `bg-gray-200` cuando progress=0, o hay un patrón alternativo que NO confunde con lleno.
+         b. `menuItems` quedó con exactamente 4 entradas (history, favorites, editProfile, settings) — `notifications` removido.
+         c. `settings` (key) sigue presente y apunta a `/profile/settings` (sidebar canónico de Ajustes).
+         d. No hay uso de `bg-gray-200` ni colores hex hardcoded.
+         e. Ninguna otra sección del archivo fue tocada fuera de la barra XP y el `menuItems`.
+         f. No hay nuevas dependencias en `package.json` del sub-repo.
+      4. Build local opcional si lo crees necesario (`cd web/frontend && npm run build`).
+
+      Reporta PASS/FAIL con bullets por cada condición. Si FAIL, lista específicamente qué línea o qué falta.
+
+  # ====================================================================
+  # PRODUCER 2 — web/frontend/src/components/react/UserDashboard.tsx
+  # ====================================================================
+  - id: fix-user-dashboard
+    title: 'UserDashboard.tsx: divisor stats + icono empty + bottom dock + dedupe tabs'
+    assigned_to: users-dgtovar-work-marketplace--developer
+    verified_by: users-dgtovar-work-marketplace--reviewer
+    max_retries: 2
+    prompt: |
+      Eres el producer de 1 archivo del sub-repo `web/frontend` de EscapeMaster.
+
+      ## Working directory y rama
+      - cd `/Users/dgtovar/Work/marketplace`
+      - Rama de trabajo: crea `git switch -c fix/profile-ui-polish-B` desde `main`
+      - Tu único archivo a tocar: `web/frontend/src/components/react/UserDashboard.tsx`
+      - NO toques otros archivos (profile.astro lo lleva otro producer en paralelo)
+      - Conventional commits. Cuando termines, haz commit local con mensaje `fix(dashboard): polish stats divider + empty icon + dedupe tabs`
+      - NO push, NO PR — sólo commit local. El orquestador decide merge.
+
+      ## Issues a resolver EN ESTE ARCHIVO
+
+      ### Issue 1 — Línea divisoria ausente entre "Jugadas" y "Escapadas"
+
+      Bloque grid de stats (líneas ~697-739):
+      ```
+      <div className="grid grid-cols-3 sm:grid-cols-5 divide-x divide-gray-100">
+        {[...jugadas, escapadas, tasa, reseñas, fotos].map(...)}
+      </div>
+      ```
+
+      Diagnóstico probable: el `divide-x` de Tailwind v4 con `divide-gray-100` (color casi imperceptible) puede no renderizarse claramente entre la primera y segunda columna cuando el grid es `grid-cols-3` (mobile) y los items hiddenOnMobile (reseñas/fotos) hacen wrap visual.
+
+      Decisión recomendada:
+      - Mantén `divide-x divide-gray-200` (más visible que gray-100 — sube contraste), o
+      - Si consideras que el grid es inconsistente entre breakpoints, reemplaza `divide-x` por bordes explícitos en cada celda con `border-l first:border-l-0`. Sea cual sea, asegúrate de que el divisor entre Jugadas (idx 0) y Escapadas (idx 1) ES VISIBLE al menos en mobile (3 cols).
+      - Si el problema viene de que `hideOnMobile: true` en reseñas/fotos hace wrap a una segunda fila en mobile, esos items NO deberían ocultarse — el flag `hideOnMobile` no se está usando en el render actual. Considera implementar `hideOnMobile` con `hidden sm:block` o `<div className="hidden sm:contents">` en las celdas correspondientes para que el wrap no rompa el divisor. Documenta tu decisión en el código con un comentario.
+
+      ### Issue 4 — Confusión "Notificaciones" / "Avisos" + dedupe con sidebar
+
+      Las pestañas centrales (líneas ~743-783) tienen un `<TabButton>` con `label={lang === 'en' ? 'Notifications' : 'Avisos'}` (línea ~775).
+
+      **Decisión arquitectónica unificada** (compartida con el producer paralelo de profile.astro):
+      - El sidebar de `profile.astro` ya tiene un item "Notificaciones" que apuntaba a `?tab=notifications`. **ESE item será ELIMINADO** por el otro producer.
+      - Para evitar el duplicado y unificar el término en español, debes:
+        - **RENOMBRAR** la pestaña "Avisos" → "Notificaciones" (en `lang === 'en'` ya es "Notifications", mantén ambos).
+        - **ELIMINAR** la pestaña "Ajustes" (`activeTab === "settings"`) de las `<TabButton>` y del `switch` de render correspondiente (líneas ~777-782 y ~983-1030 con `<TabButton>` + bloque `activeTab === "settings" && (...)`). El sidebar de profile.astro conserva el enlace "Ajustes" que va a `/profile/settings`, que es la experiencia canónica de settings.
+        - Quita "Ajustes" del array `initialTab` (línea ~390) y del `if (t === 'notifications' || t === 'settings' || ...)`.
+        - Estado global: tras tu cambio, `activeTab` aceptable: `'bookings' | 'routes' | 'achievements' | 'credits' | 'notifications'`. Quita `'settings'` del type union (línea ~402).
+
+      ### Issue 5 — Icono de sobre (Mail) en empty state de "Mis Reservas"
+
+      Bloque ~818-832:
+      ```
+      <div className="text-center py-12 sm:py-16 bg-gray-50 rounded-xl sm:rounded-2xl">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 flex items-center justify-center rounded-2xl bg-gray-100">
+          <Mail size={28} className="text-gray-400" />
+        </div>
+        <p className="text-sm sm:text-base text-gray-500">{labels.noBookings}</p>
+        ...
+      </div>
+      ```
+
+      Reemplaza `<Mail size={28} ...>` por un icono coherente con la pestaña (que ya usa `Calendar`):
+      - `<Calendar size={28} className="text-gray-400" />` — opción preferida.
+      - Alternativa: `<Ticket />` o `<Clock />` si encajan mejor con "reserva".
+      - Tras el cambio, **quita `Mail` del import** (línea ~32) si ya no se usa en otro sitio del archivo.
+
+      Valida que `Mail` no aparezca en otros lugares del archivo antes de quitarlo: `grep -n "Mail" src/components/react/UserDashboard.tsx` desde tu working dir.
+
+      ### Issue 6 — Artefacto visual: dock negro recortado en el borde inferior
+
+      El usuario reportó un "menú negro flotante cortado a la mitad" asomando en el centro-inferior. Esto NO está en el código que has visto del UserDashboard ni en profile.astro por lo que se ve.
+
+      Investigación obligatoria:
+      - Busca elementos con `fixed`, `inset-x-`, `bottom-`, `dock`, `floating` en `web/frontend/src/layouts/Layout.astro`, `web/frontend/src/components/layouts/*`, y archivos globales (`src/styles/global.css`, `src/components/Header*`, `src/components/NotificationsPanel*`).
+      - Revisa el navegador con Playwright en `/es/profile` (con sesión iniciada) y captura pantalla. Identifica el origen del dock.
+      - Posibles causas: componente de barra mobile que se renderiza en desktop por error, elemento `fixed` sin `overflow-hidden` en el main, banner/chrome de Astro dev overlay, extensión del navegador, etc.
+      - Si está en este repo: arregla el estilo (típicamente `hidden md:block` si es mobile-only, o `overflow-hidden` en el contenedor padre si es un clip bug).
+      - Si NO está en este repo (es overlay del browser o extensión): documenta tu investigación en el deliverable pero NO hagas cambios invasivos.
+
+      Implementación: deja el archivo limpio y, si la causa está fuera de tu archivo asignado, explica en el deliverable dónde está y cómo reproducir. NO escribas cambios fuera de UserDashboard.tsx.
+
+      ## Constraints (obliga)
+      - Tailwind v4 con tokens `tropical-*` para primarios/acento.
+      - Mantén compatibilidad i18n (es/en) — al renombrar "Avisos" → "Notificaciones", asegúrate que `lang === "en"` sigue mostrando "Notifications".
+      - Mobile-first, touch targets ≥44px, NO rompas `client:load` ni el flujo de `userRoutes`/`bookings`.
+      - NO añadas dependencias nuevas.
+      - NO hagas cambios en `NotificationsPanel.tsx` salvo si estrictamente necesario para Issue 6; si lo tocas, documéntalo.
+
+      ## Deliverable
+      Reporta al final:
+      1. Diff resumido por issue (qué líneas/cambios).
+      2. Hash del commit local.
+      3. Para Issue 6: árbol de búsqueda de elementos fixed/dock y conclusión (dentro-fuera de este archivo) + captura visual si tienes Playwright.
+      4. Verificación rápida de que NO rompes tipos TypeScript (puedes correr `npx tsc --noEmit -p web/frontend/tsconfig.json` o equivalente desde el repo).
+    verify_prompt: |
+      Verifica el commit del producer sobre `web/frontend/src/components/react/UserDashboard.tsx` en la rama `fix/profile-ui-polish-B`.
+
+      Procedimiento independiente (NO leas el reporte del producer):
+
+      1. `git -C /Users/dgtovar/Work/marketplace log fix/profile-ui-polish-B --oneline -5` — confirma commit con prefijo `fix(dashboard):`.
+      2. `git -C /Users/dgtovar/Work/marketplace diff main..fix/profile-ui-polish-B -- web/frontend/src/components/react/UserDashboard.tsx` — inspecciona el diff.
+      3. Verifica las 8 condiciones:
+         a. La grid de stats (línea ~697) usa un mecanismo que produce divisor VISIBLE entre Jugadas y Escapadas, en mobile Y desktop. Cambia `divide-gray-100` por algo más visible o reescribe con bordes explícitos.
+         b. La pestaña central "Avisos" ahora tiene label `Notificaciones` en español (y `Notifications` en en) — busca `Avisos` en el archivo post-cambio y confirma que NO aparece.
+         c. La pestaña central "Ajustes" (`<TabButton active={activeTab === "settings"} ...>` y el bloque `{activeTab === "settings" && ...}` ) está COMPLETAMENTE ELIMINADA.
+         d. El array `initialTab` y el type union ya no contienen `'settings'`.
+         e. El icono del empty state de Reservas (`<Mail .../>`) ya NO aparece — fue reemplazado por Calendar/Ticket/Clock.
+         f. Si `Mail` ya no se usa en ningún otro sitio del archivo, fue removido del import.
+         g. Los tokens `tropical-*` se respetan y no hay hex hardcoded en zonas de UI principal.
+         h. Para Issue 6: hay documentación en el deliverable del producer explicando dónde está el dock y si está dentro o fuera del archivo. Si dentro, fue arreglado.
+      4. Type-check opcional: `cd web/frontend && npx tsc --noEmit` (no debe romper por el cambio).
+      5. Si el producer tocó NotificationsPanel u otros archivos fuera de scope, RECHAZA — debe quedarse en su archivo.
+
+      Reporta PASS/FAIL con bullets por cada condición. Si FAIL, lista específicamente qué falta.
+
+  # ====================================================================
+  # FINAL GATE — Visual + integración end-to-end
+  # ====================================================================
+  - id: verify-ui-fixes-e2e
+    title: 'Gate visual: confirmar las 6 issues corregidas en navegador real'
+    role: verify-as-task
+    assigned_to: users-dgtovar-work-marketplace--tester
+    depends_on:
+      - fix-profile-astro
+      - fix-user-dashboard
+    max_retries: 1
+    prompt: |
+      Eres el verificador final visual del plan. Confirma end-to-end que las 6 issues del perfil del jugador están corregidas.
+
+      ## Setup
+      - Las dos ramas productoras son `fix/profile-ui-polish-A` y `fix/profile-ui-polish-B`. Fusiona ambas en una rama local de verificación: `fix/profile-ui-polish-merged` desde `main`.
+        ```
+        git -C /Users/dgtovar/Work/marketplace switch -c fix/profile-ui-polish-merged main
+        git -C /Users/dgtovar/Work/marketplace merge --no-ff fix/profile-ui-polish-A -m "merge UI polish A"
+        git -C /Users/dgtovar/Work/marketplace merge --no-ff fix/profile-ui-polish-B -m "merge UI polish B"
+        ```
+      - Levanta el dev server: `cd web/frontend && npm run dev` (puerto 4321). `playwright` MCP server debería estar disponible.
+      - Loguéate con la cuenta de prueba de Diego o el usuario real que tengas disponible.
+
+      ## Checklist visual (cada item PASS/FAIL con captura)
+
+      Issue 1 — Divisor "Jugadas"/"Escapadas":
+      - Navega a `/es/profile` con viewport mobile (390x844) y desktop (1280x800).
+      - El divisor vertical entre la primera y segunda celda de stats (Jugadas | Escapadas) DEBE verse claramente. Captura.
+
+      Issue 2 — Barra XP al 0% no engaña:
+      - Con un usuario que tenga `total_xp = 0`, la barra debe verse VACÍA (sin parecer rellena de gris oscuro). Captura.
+
+      Issue 3 — Un solo lugar para Ajustes:
+      - En el sidebar, NO debe aparecer "Ajustes" si quedó duplicado. En el panel central NO debe haber pestaña "Ajustes". La forma canónica de entrar a ajustes es el sidebar.
+
+      Issue 4 — Un solo lugar para Notificaciones, mismo label:
+      - Buscar "Notificaciones" + "Avisos" en pantalla. Sólo debe aparecer una etiqueta: "Notificaciones".
+
+      Issue 5 — Icono empty state de "Mis Reservas":
+      - En la pestaña "Mis Reservas" sin reservas, el icono debe ser Calendar (o Ticket/Clock), NO un sobre (Mail).
+
+      Issue 6 — Dock recortado inferior:
+      - En viewport mobile y desktop, captura pantalla completa y verifica que NO aparece ningún menú negro flotante cortado en el borde inferior.
+
+      ## Salida esperada
+      Reporte estructurado con:
+      - Tabla 6 filas: Issue | PASS/FAIL | Nota | Captura (path local).
+      - Veredicto final PASS si todos pasan, FAIL si alguno falla. Si FAIL, lista los issues fallidos y la causa probable.
+      - Si un issue requiere más trabajo fuera de scope, indícalo claramente.

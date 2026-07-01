@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EscapeUp Widget Tester</title>
+    <script src="https://bookingsystem.escapeup.es/escapeup-booking-system.js"></script>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #0f0f1a;
+        font-family: "Segoe UI", sans-serif;
+        min-height: 100vh;
+        padding: 40px 20px;
+        color: #f0f0f0;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+      header h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      header p {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .widgets-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .widget-card {
+        background: #1c1c2e;
+        border: 1px solid #2e2e45;
+        border-radius: 16px;
+        padding: 24px;
+        width: 100%;
+        max-width: 480px;
+      }
+
+      .widget-card h2 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #aaa;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>EscapeUp Widget Tester</h1>
+      <p>Estilos personalizados via CSS custom properties del datepicker</p>
+    </header>
+
+    <div class="widgets-grid">
+      <!-- TEMA OSCURO PERSONALIZADO -->
+      <div class="widget-card">
+        <h2>Sala 1 · Tema Oscuro</h2>
+        <escapeup-calendar
+          game-id="1371"
+          enterprise-id="113"
+          token="114|SEL85BgN9pqmXacoohNsCbntPRBiVJzuBs7l1OfL30ae6c5c"
+          user-auth-token=""
+          only-gift="false"
+          style="
+            --dp-background-color: #1e1e2e;
+            --dp-text-color: #cdd6f4;
+            --dp-hover-color: #313244;
+            --dp-hover-text-color: #cdd6f4;
+            --dp-hover-icon-color: #cba6f7;
+            --dp-primary-color: #cba6f7;
+            --dp-primary-text-color: #1e1e2e;
+            --dp-primary-disabled-color: #45475a;
+            --dp-secondary-color: #313244;
+            --dp-border-color: #45475a;
+            --dp-border-color-hover: #cba6f7;
+            --dp-menu-border-color: #45475a;
+            --dp-disabled-color: #313244;
+            --dp-disabled-color-text: #585b70;
+            --dp-icon-color: #a6adc8;
+            --dp-danger-color: #f38ba8;
+            --dp-success-color: #a6e3a1;
+            --dp-success-color-disabled: #40564e;
+            --dp-scroll-bar-background: #181825;
+            --dp-scroll-bar-color: #cba6f7;
+            --dp-tooltip-color: #313244;
+            --dp-marker-color: #cba6f7;
+          "
+        >
+        </escapeup-calendar>
+      </div>
+
+      <!-- TEMA ROJO / ESCAPE ROOM -->
+      <div class="widget-card">
+        <h2>Sala 2 · Tema Rojo</h2>
+        <escapeup-calendar
+          game-id="1372"
+          enterprise-id="113"
+          token="114|SEL85BgN9pqmXacoohNsCbntPRBiVJzuBs7l1OfL30ae6c5c"
+          user-auth-token=""
+          only-gift="false"
+          style="
+            --dp-background-color: #1a0a0a;
+            --dp-text-color: #f5e6e6;
+            --dp-hover-color: #3d1515;
+            --dp-hover-text-color: #ffffff;
+            --dp-hover-icon-color: #e63946;
+            --dp-primary-color: #e63946;
+            --dp-primary-text-color: #ffffff;
+            --dp-primary-disabled-color: #5a2020;
+            --dp-secondary-color: #2d1010;
+            --dp-border-color: #5a2020;
+            --dp-border-color-hover: #e63946;
+            --dp-menu-border-color: #5a2020;
+            --dp-disabled-color: #2d1010;
+            --dp-disabled-color-text: #7a4040;
+            --dp-icon-color: #c97070;
+            --dp-danger-color: #ff6b6b;
+            --dp-success-color: #4ecdc4;
+            --dp-success-color-disabled: #1a4a47;
+            --dp-scroll-bar-background: #0f0505;
+            --dp-scroll-bar-color: #e63946;
+            --dp-tooltip-color: #3d1515;
+            --dp-marker-color: #e63946;
+          "
+        >
+        </escapeup-calendar>
+      </div>
+
+      <!-- TEMA CLARO MINIMALISTA -->
+      <div
+        class="widget-card"
+        style="background: #f8f9fa; border-color: #dee2e6"
+      >
+        <h2 style="color: #495057">Sala 3 · Tema Claro</h2>
+        <escapeup-calendar
+          game-id="1373"
+          enterprise-id="113"
+          token="114|SEL85BgN9pqmXacoohNsCbntPRBiVJzuBs7l1OfL30ae6c5c"
+          user-auth-token=""
+          only-gift="false"
+          style="
+            --dp-background-color: #ffffff;
+            --dp-text-color: #212529;
+            --dp-hover-color: #e9ecef;
+            --dp-hover-text-color: #212529;
+            --dp-hover-icon-color: #0d6efd;
+            --dp-primary-color: #0d6efd;
+            --dp-primary-text-color: #ffffff;
+            --dp-primary-disabled-color: #9ec5fe;
+            --dp-secondary-color: #f8f9fa;
+            --dp-border-color: #dee2e6;
+            --dp-border-color-hover: #0d6efd;
+            --dp-menu-border-color: #dee2e6;
+            --dp-disabled-color: #f8f9fa;
+            --dp-disabled-color-text: #adb5bd;
+            --dp-icon-color: #6c757d;
+            --dp-danger-color: #dc3545;
+            --dp-success-color: #198754;
+            --dp-success-color-disabled: #a3cfbb;
+            --dp-scroll-bar-background: #e9ecef;
+            --dp-scroll-bar-color: #0d6efd;
+            --dp-tooltip-color: #343a40;
+            --dp-marker-color: #0d6efd;
+          "
+        >
+        </escapeup-calendar>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+Escape Master
+La plataforma que revoluciona el ecosistema del escape room
+
+VISIÓN GENERAL
+
+Una Infraestructura Completa
+para el Escape Room
+Escape Master es una plataforma-infraestructura que centraliza el ecosistema del
+escape room, conectando jugadores y salas mediante un buscador avanzado con
+disponibilidad real, un sistema de reservas y pagos por persona, herramientas de
+gestión para Escape Rooms y un modelo de costes mínimo, dinámico y justo para el
+jugador.
+No es solo un buscador ni solo un gestor de reservas. Es una infraestructura híbrida
+(marketplace + SaaS) diseñada para crecer por volumen, control operativo y
+comunidad.
+
+Principio Operativo Fundamental
+Control = Garantía
+Solo son reservas garantizadas aquellas que se gestionan directamente con el gestor
+de reservas propio de Escape Master. Si la plataforma no controla el calendario, no
+puede garantizar la reserva.
+Este principio gobierna listados, etiquetas, comunicación al jugador, métricas y modelo
+económico.
+
+Clasificación de Escape Rooms
+Nivel 2 — Con Acuerdo
+Nivel 1 — Destacados
+
+Permiten reservas desde Escape Master,
+
+Visibilidad premium mediante sistema de
+
+con etiqueta de reserva garantizada o
+
+pujas por ciudad o comunidad. Ser
+
+pendiente de confirmación.
+
+destacado no implica reserva garantizada.
+
+Nivel 3 — Sin Acuerdo
+Solo informativos, sin relación económica.
+Etiqueta: Disponibilidad no garantizada.
+
+Listado "Qué Hay Libre Ahora"
+Listado con disponibilidad real conocida para el momento actual o fechas
+seleccionadas. Ordenación fija: Destacados primero, seguidos de Nivel 2 y Nivel 3. Sin
+suborden interno entre salas del mismo nivel.
+Esta funcionalidad permite a los jugadores encontrar experiencias disponibles de
+forma inmediata, optimizando la ocupación de las salas.
+
+Funcionalidades para el Jugador
+
+Buscador Avanzado
+
+Rankings y Premios
+
+Filtros inteligentes para encontrar la experiencia perfecta
+
+Sistema de reconocimiento del sector
+
+Reservas por Persona
+
+Comunidad
+
+Pago individual y flexible
+
+Cuenta única y sistema de reputación
+
+Modelo de Precio del Jugador
+
+0€
+
+0,10€
+
+0,50€
+
+Uso de la Plataforma
+
+Coste Mínimo
+
+Coste Máximo
+
+El jugador no paga por
+
+Por jugador y reserva con
+
+Gestión dinámica según
+
+usar Escape Master
+
+alta participación
+
+volumen
+
+Solo un coste de gestión dinámico entre 0,10 € y 0,50 € por jugador y reserva. Cuanta
+más participación exista en la plataforma, menor será el coste para todos.
+
+Funcionalidades para el Escape
+Room
+Visibilidad y Reservas
+
+Gestión Financiera
+
+Mayor exposición en el mercado
+
+Liquidaciones semanales
+
+Reservas centralizadas en una sola
+
+automáticas
+
+plataforma
+
+Eliminación de TPV físico
+
+Acceso a comunidad activa de
+
+Reducción de costes operativos
+
+jugadores
+
+Gestor de Reservas Propio y Modelo de Precios
+5% Comisión
+
+8% Comisión
+
+Con gestor de reservas propio de Escape Master
+
+Con gestor de reservas externo
+
+Destacados por Pujas
+
+Gestor Gratuito
+
+Sistema de visibilidad premium por ciudad o comunidad
+
+Plan sin coste para Escape Rooms afiliados
+
+El gestor de reservas propio es el núcleo del ecosistema, con plan gratuito para afiliados y modelo escalado para no afiliados.
+
+Principios Estratégicos
+El Jugador Aporta Valor
+Cuanta más participación, menores costes para todos
+
+Integración = Ventaja
+El Escape Room integrado obtiene mejores condiciones
+
+Control Operativo
+La garantía depende del control del calendario
+
+Crecimiento Sostenible
+Por volumen y comunidad activa
+
+

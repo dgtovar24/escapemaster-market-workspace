@@ -1,0 +1,7 @@
+
+### Visual gates: distinguish dev-only floating artifacts from source bugs (2026-06-29)
+Type: feedback
+When a visual gate FAILs on "no clipped dock at viewport bottom" or similar floating-UI checks, before declaring FAIL check whether the artifact is dev-only (injected by dev server, not in `npm run build` output). Concrete example: Astro v7 injects `<astro-dev-toolbar>` (shadow-DOM custom element, ~100px tall, `position: fixed; bottom: 0`) in `astro dev` only. It clips ~40px below viewport on common sizes (1280x800, 390x844) and reappears on every page. Detect with `document.querySelector("astro-dev-toolbar")` + shadow-root bounding rect. Other dev-only artifacts: Vite error overlay, React DevTools panel.
+Why: Reporting these as FAIL confuses the gate — they ship no user impact, only waste a fix cycle.
+Apply when: gate asks for "no floating menu / no clipped dock / clean viewport edges" and you see a black bar at the bottom in dev. Confirm via (a) DOM presence of `<astro-dev-toolbar>` or Vite/React panel tag, (b) is this in source code? grep `astro.config.mjs` for `devToolbar`, (c) does it disappear in `npm run build && npm run preview`? If yes → mark as FAIL with note "dev-only artifact, no production impact", propose `devToolbar: { enabled: false }` as opt-in fix. If no → real source bug, escalate normally.
+Companion rule: developer agent already has "Floating/fixed UI artifact: investigar ANTES de fixear en source" — same principle from the fix side; this is the verify side.
